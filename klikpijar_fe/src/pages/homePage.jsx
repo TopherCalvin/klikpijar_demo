@@ -1,33 +1,46 @@
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import klikpijar from "../assets/logo-default-slim.png";
+
 const Home = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("xl"));
+  const logoHeight = isSmallScreen ? 80 : 114;
   return (
-    <Box
-      display={"flex"}
-      width={"100%"}
-      height={"150px"}
-      alignContent={"center"}
-      justifyContent={"center"}
-      color={"white"}
-    >
+    <AppBar position="sticky">
       <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          maxWidth: {
-            xs: "100%",
-            sm: "540px",
-            md: "720px",
-            lg: "960px",
-            xl: "1140px",
-            xxl: "1320px",
-          },
-        }}
+        display={"flex"}
+        width={"100%"}
+        height={"150px"}
+        alignContent={"center"}
+        justifyContent={"center"}
+        color={theme.palette.secondary.main}
       >
-        abc
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            maxWidth: {
+              xs: "100%",
+              sm: "540px",
+              md: "720px",
+              lg: "960px",
+              xl: "1140px",
+            },
+          }}
+        >
+          <IconButton href="/">
+            <img alt="Klikpijar" src={klikpijar} height={logoHeight} />
+          </IconButton>
+        </Box>
       </Box>
-    </Box>
+    </AppBar>
   );
 };
 

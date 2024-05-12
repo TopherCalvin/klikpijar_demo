@@ -12,8 +12,8 @@ const customTheme = createTheme({
     },
   },
   palette: {
-    primary: { main: "#0088CC" },
-    secondary: { main: "#e36159" },
+    primary: { main: "#fffff" },
+    secondary: { main: "#4c7c9e" },
     tertiary: { main: "#2BAAB1" },
     quaternary: { main: "#383f48" },
   },
