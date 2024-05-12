@@ -35,9 +35,11 @@ const Home = () => {
             },
           }}
         >
-          <IconButton href="/">
-            <img alt="Klikpijar" src={klikpijar} height={logoHeight} />
-          </IconButton>
+          <Box height={"100%"}>
+            <IconButton href="/">
+              <img alt="Klikpijar" src={klikpijar} height={logoHeight} />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
     </AppBar>
