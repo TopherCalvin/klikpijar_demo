@@ -1,13 +1,20 @@
-import { AppBar, Box, Button, IconButton, useTheme } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import klikpijar from "../assets/logo-default-slim.png";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/home.css";
-import routes from "../routes/routes";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const theme = useTheme();
+  const mediaQuery = useMediaQuery("(min-width: 991.5px");
   const page = [
     { name: "BERANDA", path: "/" },
     { name: "FOKUS KAMI", path: "/1" },
@@ -18,7 +25,7 @@ const Home = () => {
   ];
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(routes.routes);
+
   return (
     <AppBar position="sticky">
       <Box
@@ -96,24 +103,57 @@ const Home = () => {
               height={"50%"}
               gap={"10px"}
             >
-              {page.map((page) => (
-                <Button
-                  className="navbar-buttons"
-                  key={page.path}
-                  onClick={() => {
-                    navigate(`${page.path}`);
-                  }}
-                  sx={{
-                    fontWeight: 600,
-                    color:
-                      location.pathname === page.path ? "white" : "inherit",
-                    bgcolor:
-                      location.pathname === page.path ? "#4c7c9e" : "inherit",
-                  }}
-                >
-                  {page.name}
-                </Button>
-              ))}
+              {mediaQuery ? (
+                page.map((page) => (
+                  <Button
+                    className="navbar-buttons"
+                    key={page.path}
+                    onClick={() => {
+                      navigate(`${page.path}`);
+                    }}
+                    sx={{
+                      fontWeight: 600,
+                      color:
+                        location.pathname === page.path ? "white" : "inherit",
+                      bgcolor:
+                        location.pathname === page.path ? "#4c7c9e" : "inherit",
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))
+              ) : (
+                <Box>
+                  {/* <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                  </Menu> */}
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

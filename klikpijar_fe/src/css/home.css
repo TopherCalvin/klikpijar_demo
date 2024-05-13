@@ -18,6 +18,12 @@
   }
 }
 
+@media screen and (max-width: 991.5px) {
+  .navbar-buttons {
+    display: none;
+  }
+}
+
 @keyframes move-right {
   0% {
     transform: translateX(0px);
