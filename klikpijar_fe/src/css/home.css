@@ -1,0 +1,26 @@
+.logo-transition {
+  height: 114px;
+  transition: height 0.3s ease-in-out;
+}
+
+.about-us:hover .right-arrow {
+  animation: move-right 0.6s infinite ease-in-out;
+}
+
+@media screen and (max-width: 1200px) {
+  .logo-transition {
+    height: 80px;
+  }
+}
+
+@keyframes move-right {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}

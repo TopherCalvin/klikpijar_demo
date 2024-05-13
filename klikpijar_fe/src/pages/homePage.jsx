@@ -1,16 +1,11 @@
-import {
-  AppBar,
-  Box,
-  IconButton,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { AppBar, Box, Button, IconButton, useTheme } from "@mui/material";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import SearchIcon from "@mui/icons-material/Search";
 import klikpijar from "../assets/logo-default-slim.png";
+import "../css/home.css";
 
 const Home = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("xl"));
-  const logoHeight = isSmallScreen ? 80 : 114;
   return (
     <AppBar position="sticky">
       <Box
@@ -35,10 +30,51 @@ const Home = () => {
             },
           }}
         >
-          <Box height={"100%"}>
-            <IconButton href="/">
-              <img alt="Klikpijar" src={klikpijar} height={logoHeight} />
+          <Box height={"114px"} width={"305px"}>
+            <IconButton href="/" disableRipple>
+              <img
+                className="logo-transition"
+                alt="Klikpijar"
+                src={klikpijar}
+              />
             </IconButton>
+          </Box>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            height={"100%"}
+            width={"100%"}
+          >
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"flex-end"}
+              height={"50%"}
+              gap={"20px"}
+            >
+              <Button
+                size="small"
+                className="about-us"
+                disableRipple
+                sx={{ color: "#afaca9" }}
+              >
+                <Box
+                  className="right-arrow"
+                  display={"flex"}
+                  alignItems={"center"}
+                >
+                  <ChevronRightIcon fontSize="" />
+                </Box>
+                Tentang Kami
+              </Button>
+              <SearchIcon sx={{ color: "black", fontSize: "20px" }} />
+            </Box>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"flex-end"}
+              height={"50%"}
+            ></Box>
           </Box>
         </Box>
       </Box>
