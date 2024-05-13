@@ -69,7 +69,7 @@ const Home = () => {
                 size="small"
                 className="about-us"
                 disableRipple
-                sx={{ color: "#afaca9" }}
+                sx={{ color: "#afaca9", textTransform: "none" }}
               >
                 <Box
                   className="right-arrow"
@@ -83,7 +83,7 @@ const Home = () => {
               <Box
                 display={"flex"}
                 justifyContent={"flex-end"}
-                borderLeft={"solid 1px"}
+                borderLeft={"solid 1px #fafafa"}
                 width={"30px"}
               >
                 <SearchIcon sx={{ color: "black", fontSize: "20px" }} />
