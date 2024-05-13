@@ -3,17 +3,22 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import klikpijar from "../assets/logo-default-slim.png";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/home.css";
+import routes from "../routes/routes";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const theme = useTheme();
   const page = [
-    "BERANDA",
-    "FOKUS KAMI",
-    "ADVERS EVENT",
-    "INFO DASAR HIV",
-    "MITRA",
-    "FAQ",
+    { name: "BERANDA", path: "/" },
+    { name: "FOKUS KAMI", path: "/1" },
+    { name: "ADVERS EVENT", path: "/" },
+    { name: "INFO DASAR HIV", path: "/" },
+    { name: "MITRA", path: "/" },
+    { name: "FAQ", path: "/" },
   ];
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(routes.routes);
   return (
     <AppBar position="sticky">
       <Box
@@ -94,10 +99,19 @@ const Home = () => {
               {page.map((page) => (
                 <Button
                   className="navbar-buttons"
-                  key={page}
-                  sx={{ fontWeight: 600 }}
+                  key={page.path}
+                  onClick={() => {
+                    navigate(`${page.path}`);
+                  }}
+                  sx={{
+                    fontWeight: 600,
+                    color:
+                      location.pathname === page.path ? "white" : "inherit",
+                    bgcolor:
+                      location.pathname === page.path ? "#4c7c9e" : "inherit",
+                  }}
                 >
-                  {page}
+                  {page.name}
                 </Button>
               ))}
             </Box>
