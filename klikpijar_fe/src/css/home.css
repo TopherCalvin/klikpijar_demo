@@ -3,6 +3,11 @@
   transition: height 0.3s ease-in-out;
 }
 
+.navbar-buttons:hover {
+  color: white;
+  background-color: #0d6efd;
+}
+
 .about-us:hover .right-arrow {
   animation: move-right 0.6s infinite ease-in-out;
 }

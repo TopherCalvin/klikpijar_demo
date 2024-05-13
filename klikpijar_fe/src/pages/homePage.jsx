@@ -1,11 +1,19 @@
 import { AppBar, Box, Button, IconButton, useTheme } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import SearchIcon from "@mui/icons-material/Search";
 import klikpijar from "../assets/logo-default-slim.png";
+import SearchIcon from "@mui/icons-material/Search";
 import "../css/home.css";
 
 const Home = () => {
   const theme = useTheme();
+  const page = [
+    "BERANDA",
+    "FOKUS KAMI",
+    "ADVERS EVENT",
+    "INFO DASAR HIV",
+    "MITRA",
+    "FAQ",
+  ];
   return (
     <AppBar position="sticky">
       <Box
@@ -50,7 +58,7 @@ const Home = () => {
               alignItems={"center"}
               justifyContent={"flex-end"}
               height={"50%"}
-              gap={"20px"}
+              gap={"10px"}
             >
               <Button
                 size="small"
@@ -67,14 +75,32 @@ const Home = () => {
                 </Box>
                 Tentang Kami
               </Button>
-              <SearchIcon sx={{ color: "black", fontSize: "20px" }} />
+              <Box
+                display={"flex"}
+                justifyContent={"flex-end"}
+                borderLeft={"solid 1px"}
+                width={"30px"}
+              >
+                <SearchIcon sx={{ color: "black", fontSize: "20px" }} />
+              </Box>
             </Box>
             <Box
               display={"flex"}
               alignItems={"center"}
               justifyContent={"flex-end"}
               height={"50%"}
-            ></Box>
+              gap={"10px"}
+            >
+              {page.map((page) => (
+                <Button
+                  className="navbar-buttons"
+                  key={page}
+                  sx={{ fontWeight: 600 }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
           </Box>
         </Box>
       </Box>
