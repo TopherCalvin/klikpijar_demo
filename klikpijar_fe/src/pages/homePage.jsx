@@ -5,19 +5,22 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import klikpijar from "../assets/logo-default-slim.png";
 import SearchIcon from "@mui/icons-material/Search";
 import "../css/home.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Home = () => {
   const theme = useTheme();
   const mediaQuery = useMediaQuery("(min-width: 991.5px");
   const page = [
     { name: "BERANDA", path: "/" },
-    { name: "FOKUS KAMI", path: "/1" },
+    { name: "FOKUS KAMI", path: "/" },
     { name: "ADVERS EVENT", path: "/" },
     { name: "INFO DASAR HIV", path: "/" },
     { name: "MITRA", path: "/" },
@@ -25,6 +28,15 @@ const Home = () => {
   ];
   const location = useLocation();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(false);
+
+  function handleMenu(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleClose() {
+    setAnchorEl(false);
+  }
 
   return (
     <AppBar position="sticky">
@@ -123,36 +135,7 @@ const Home = () => {
                   </Button>
                 ))
               ) : (
-                <Box>
-                  {/* <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                  </Menu> */}
-                </Box>
+                <Box></Box>
               )}
             </Box>
           </Box>
