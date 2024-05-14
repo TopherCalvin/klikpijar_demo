@@ -5,15 +5,14 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
-  Menu,
-  MenuItem,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import klikpijar from "../assets/logo-default-slim.png";
 import SearchIcon from "@mui/icons-material/Search";
-import "../css/home.css";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "../css/home.css";
 
 const Home = () => {
   const theme = useTheme();
