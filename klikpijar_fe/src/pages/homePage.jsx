@@ -19,35 +19,23 @@ const Home = () => {
   const mediaQuery = useMediaQuery("(min-width: 991.5px");
   const page = [
     { name: "BERANDA", path: "/" },
-    { name: "FOKUS KAMI", path: "/" },
-    { name: "ADVERS EVENT", path: "/" },
-    { name: "INFO DASAR HIV", path: "/" },
-    { name: "MITRA", path: "/" },
-    { name: "FAQ", path: "/" },
+    { name: "FOKUS KAMI", path: "/1" },
+    { name: "ADVERS EVENT", path: "/2" },
+    { name: "INFO DASAR HIV", path: "/3" },
+    { name: "MITRA", path: "/4" },
+    { name: "FAQ", path: "/5" },
   ];
   const location = useLocation();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(false);
 
-  function handleMenu(event) {
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleClose() {
-    setAnchorEl(false);
+  function handleMenu() {
+    setAnchorEl(!anchorEl);
   }
 
   return (
     <AppBar position="sticky">
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        width={"100%"}
-        height={"150px"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        color={theme.palette.secondary.main}
-      >
+      <Box color={theme.palette.secondary.main} className="header">
         <Box
           sx={{
             display: "flex",
@@ -135,7 +123,7 @@ const Home = () => {
                   </Button>
                 ))
               ) : (
-                <Button
+                <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -149,27 +137,57 @@ const Home = () => {
                   onClick={handleMenu}
                 >
                   <MenuIcon />
-                </Button>
+                </Box>
               )}
             </Box>
           </Box>
         </Box>
-
-        {page.map((page) => (
-          <Button
-            key={page.path}
-            onClick={() => {
-              navigate(`${page.path}`);
-            }}
-            sx={{
-              fontWeight: 600,
-              color: location.pathname === page.path ? "white" : "inherit",
-              bgcolor: location.pathname === page.path ? "#4c7c9e" : "inherit",
-            }}
-          >
-            {page.name}
-          </Button>
-        ))}
+        {!mediaQuery && anchorEl
+          ? page.map((page) => (
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: {
+                    xs: "100%",
+                    sm: "540px",
+                    md: "720px",
+                    lg: "960px",
+                    xl: "1140px",
+                  },
+                  fontWeight: 600,
+                  borderBottom: "solid #f5f5f5 1px",
+                }}
+              >
+                <Button
+                  key={page.path}
+                  onClick={() => {
+                    navigate(`${page.path}`);
+                  }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    width: "100%",
+                    maxWidth: {
+                      xs: "100%",
+                      sm: "540px",
+                      md: "720px",
+                      lg: "960px",
+                      xl: "1140px",
+                    },
+                    fontWeight: 600,
+                    color:
+                      location.pathname === page.path ? "white" : "inherit",
+                    bgcolor:
+                      location.pathname === page.path ? "#4c7c9e" : "inherit",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {page.name}
+                </Button>
+              </Box>
+            ))
+          : null}
       </Box>
     </AppBar>
   );
