@@ -41,9 +41,10 @@ const Home = () => {
     <AppBar position="sticky">
       <Box
         display={"flex"}
+        flexDirection={"column"}
         width={"100%"}
         height={"150px"}
-        alignContent={"center"}
+        alignItems={"center"}
         justifyContent={"center"}
         color={theme.palette.secondary.main}
       >
@@ -134,11 +135,41 @@ const Home = () => {
                   </Button>
                 ))
               ) : (
-                <Box></Box>
+                <Button
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "5px",
+                    color: "white",
+                    bgcolor: "#4c7c9e",
+                    width: "45px",
+                    height: "45px",
+                  }}
+                  onClick={handleMenu}
+                >
+                  <MenuIcon />
+                </Button>
               )}
             </Box>
           </Box>
         </Box>
+
+        {page.map((page) => (
+          <Button
+            key={page.path}
+            onClick={() => {
+              navigate(`${page.path}`);
+            }}
+            sx={{
+              fontWeight: 600,
+              color: location.pathname === page.path ? "white" : "inherit",
+              bgcolor: location.pathname === page.path ? "#4c7c9e" : "inherit",
+            }}
+          >
+            {page.name}
+          </Button>
+        ))}
       </Box>
     </AppBar>
   );
