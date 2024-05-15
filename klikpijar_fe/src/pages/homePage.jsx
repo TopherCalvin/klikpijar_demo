@@ -40,6 +40,7 @@ const Home = () => {
           sx={{
             display: "flex",
             alignItems: "center",
+            height: "150px",
             width: "100%",
             maxWidth: {
               xs: "100%",
@@ -81,7 +82,14 @@ const Home = () => {
                 size="small"
                 className="about-us"
                 disableRipple
-                sx={{ color: "#afaca9", textTransform: "none" }}
+                sx={{
+                  color: "#afaca9",
+                  textTransform: "none",
+                  display: {
+                    xs: "none",
+                    md: "flex",
+                  },
+                }}
               >
                 <Box
                   className="right-arrow"
@@ -162,12 +170,13 @@ const Home = () => {
       </Box>
       <Box
         sx={{
+          backgroundColor: "white",
           width: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           transition: "transform 1s ease-in-out",
-          transform: `${anchorEl ? "translateY(170px)" : "translateY(-75px)"}`,
+          transform: `${anchorEl ? "translateY(151px)" : "translateY(-75px)"}`,
         }}
         position={"absolute"}
         zIndex={"-1"}
