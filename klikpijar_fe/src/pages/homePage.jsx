@@ -50,7 +50,12 @@ const Home = () => {
             },
           }}
         >
-          <Box height={"114px"} width={"305px"}>
+          <Box
+            height={"114px"}
+            width={"305px"}
+            display={"flex"}
+            alignItems={"center"}
+          >
             <IconButton href="/" disableRipple>
               <img
                 className="logo-transition"
@@ -117,6 +122,17 @@ const Home = () => {
                         location.pathname === page.path ? "white" : "inherit",
                       bgcolor:
                         location.pathname === page.path ? "#4c7c9e" : "inherit",
+                      outline: "none",
+                      "&:focus": {
+                        boxShadow: "none",
+                        border: "1px solid rgba(0, 0, 0, 0.2)",
+                        color:
+                          location.pathname === page.path ? "white" : "inherit",
+                        bgcolor:
+                          location.pathname === page.path
+                            ? "#4c7c9e"
+                            : "inherit",
+                      },
                     }}
                   >
                     {page.name}
@@ -124,15 +140,16 @@ const Home = () => {
                 ))
               ) : (
                 <Box
+                  className="menu-button"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "5px",
                     color: "white",
                     bgcolor: "#4c7c9e",
-                    width: "45px",
-                    height: "45px",
+                    width: "40px",
+                    height: "40px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "6px",
                   }}
                   onClick={handleMenu}
                 >
@@ -142,52 +159,57 @@ const Home = () => {
             </Box>
           </Box>
         </Box>
-        {!mediaQuery && anchorEl
-          ? page.map((page) => (
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: {
-                    xs: "100%",
-                    sm: "540px",
-                    md: "720px",
-                    lg: "960px",
-                    xl: "1140px",
-                  },
-                  fontWeight: 600,
-                  borderBottom: "solid #f5f5f5 1px",
-                }}
-              >
-                <Button
-                  key={page.path}
-                  onClick={() => {
-                    navigate(`${page.path}`);
-                  }}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    width: "100%",
-                    maxWidth: {
-                      xs: "100%",
-                      sm: "540px",
-                      md: "720px",
-                      lg: "960px",
-                      xl: "1140px",
-                    },
-                    fontWeight: 600,
-                    color:
-                      location.pathname === page.path ? "white" : "inherit",
-                    bgcolor:
-                      location.pathname === page.path ? "#4c7c9e" : "inherit",
-                    borderRadius: "5px",
-                  }}
-                >
-                  {page.name}
-                </Button>
-              </Box>
-            ))
-          : null}
+        {page.map((page) => (
+          <Box
+            display={!mediaQuery && anchorEl ? "contents" : "none"}
+            sx={{
+              width: "100%",
+              maxWidth: {
+                xs: "100%",
+                sm: "540px",
+                md: "720px",
+                lg: "960px",
+                xl: "1140px",
+              },
+              borderBottom: "solid #f5f5f5 1px",
+            }}
+          >
+            <Button
+              key={page.path}
+              onClick={() => {
+                navigate(`${page.path}`);
+              }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                width: "100%",
+                maxWidth: {
+                  xs: "100%",
+                  sm: "540px",
+                  md: "720px",
+                  lg: "960px",
+                  xl: "1140px",
+                },
+                outline: "none",
+                "&:focus": {
+                  boxShadow: "none",
+                  border: "1px solid rgba(0, 0, 0, 0.2)",
+                  color: location.pathname === page.path ? "white" : "inherit",
+                  bgcolor:
+                    location.pathname === page.path ? "#4c7c9e" : "inherit",
+                },
+                fontWeight: 600,
+                color: location.pathname === page.path ? "white" : "inherit",
+                bgcolor:
+                  location.pathname === page.path ? "#4c7c9e" : "inherit",
+                borderRadius: "5px",
+              }}
+            >
+              {page.name}
+            </Button>
+          </Box>
+        ))}
       </Box>
     </AppBar>
   );

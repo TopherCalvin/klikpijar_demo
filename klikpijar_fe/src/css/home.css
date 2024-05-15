@@ -2,14 +2,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 150px;
+  min-height: 150px;
+  height: auto;
   align-items: center;
   justify-content: center;
+  transition: height 0.5s ease-in-out;
 }
 
 .logo-transition {
-  height: 114px;
-  transition: height 0.3s ease-in-out;
+  height: 48px;
+  transition: height 1s ease-in-out;
 }
 
 .navbar-buttons:hover {
@@ -21,18 +23,21 @@
   animation: move-right 0.6s infinite ease-in-out;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 991.5px) {
+  .navbar-buttons {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 540px) {
   .logo-transition {
     height: 80px;
   }
 }
 
-@media screen and (max-width: 991.5px) {
-  .navbar-buttons {
-    display: none;
-  }
-  .header {
-    height: fit-content;
+@media screen and (min-width: 1200px) {
+  .logo-transition {
+    height: 114px;
   }
 }
 
