@@ -159,9 +159,22 @@ const Home = () => {
             </Box>
           </Box>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          transition: "transform 1s ease-in-out",
+          transform: `${anchorEl ? "translateY(170px)" : "translateY(-75px)"}`,
+        }}
+        position={"absolute"}
+        zIndex={"-1"}
+      >
         {page.map((page) => (
           <Box
-            display={!mediaQuery && anchorEl ? "contents" : "none"}
+            className="menu-navbar"
             sx={{
               width: "100%",
               maxWidth: {

@@ -2,16 +2,18 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 150px;
-  height: auto;
+  height: 150px;
   align-items: center;
-  justify-content: center;
-  transition: height 0.5s ease-in-out;
+  background-color: white;
 }
 
 .logo-transition {
   height: 48px;
   transition: height 1s ease-in-out;
+}
+
+.menu-navbar {
+  display: none;
 }
 
 .navbar-buttons:hover {
@@ -26,6 +28,9 @@
 @media screen and (max-width: 991.5px) {
   .navbar-buttons {
     display: none;
+  }
+  .menu-navbar {
+    display: block;
   }
 }
 
