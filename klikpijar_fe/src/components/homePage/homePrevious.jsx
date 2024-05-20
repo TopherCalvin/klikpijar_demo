@@ -3,6 +3,9 @@ import {
   Box,
   Button,
   IconButton,
+  Menu,
+  MenuItem,
+  TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -27,10 +30,19 @@ const Home = () => {
   ];
   const location = useLocation();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [mainMenu, setMainMenu] = useState(false);
+  const [searchBar, setSearchBar] = useState(false);
 
   function handleMenu() {
-    setAnchorEl(!anchorEl);
+    setMainMenu(!mainMenu);
+  }
+
+  function clickSearch() {
+    setSearchBar(!searchBar);
+  }
+
+  function closeSearch() {
+    setSearchBar(false);
   }
 
   return (
@@ -100,14 +112,32 @@ const Home = () => {
                 </Box>
                 Tentang Kami
               </Button>
-              <Box
+              <Button
                 display={"flex"}
                 justifyContent={"flex-end"}
                 borderLeft={"solid 1px #fafafa"}
                 width={"30px"}
+                disableRipple
+                onClick={clickSearch}
               >
                 <SearchIcon sx={{ color: "black", fontSize: "20px" }} />
-              </Box>
+                <Menu
+                  anchorEl={searchBar}
+                  open={Boolean(searchBar)}
+                  onClose={closeSearch}
+                  sx={{ top: "-15%", left: "70%" }}
+                >
+                  <MenuItem>
+                    <Box sx={{ width: "300px", height: "" }}>
+                      <TextField
+                        id="outlined-basic"
+                        label="Outlined"
+                        variant="outlined"
+                      />
+                    </Box>
+                  </MenuItem>
+                </Menu>
+              </Button>
             </Box>
             <Box
               display={"flex"}
@@ -175,8 +205,8 @@ const Home = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          transition: "transform 1s ease-in-out",
-          transform: `${anchorEl ? "translateY(151px)" : "translateY(-75px)"}`,
+          transition: "transform 0.4s ease-in-out",
+          transform: `${mainMenu ? "translateY(151px)" : "translateY(-75px)"}`,
         }}
         position={"absolute"}
         zIndex={"-1"}
