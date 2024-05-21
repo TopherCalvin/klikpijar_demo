@@ -16,15 +16,15 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import "../components/homePage/css/header.css";
+import "../components/dashboard/css/header.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DataViewNotifikasiPasangan from "../components/homePage/table";
-import ReservasiTerbaru from "../components/homePage/Reservasi terbaru";
-import AkuPeduliTerbaru from "../components/homePage/Akupeduli terbaru";
-import SkriningHIVTerbaru from "../components/homePage/Skrining HIV terbaru";
+import ReservasiTerbaru from "../components/dashboard/reservasiTerbaru";
+import AkuPeduliTerbaru from "../components/dashboard/akuPeduliTerbaru";
+import SkriningHIVTerbaru from "../components/dashboard/skriningHIVTerbaru";
+import DataMasuk from "../components/dashboard/dataMasuk";
 
-const Home = () => {
+const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
@@ -115,9 +115,6 @@ const Home = () => {
           </Box>
         </Box>
       </AppBar>
-      <ReservasiTerbaru />
-      <AkuPeduliTerbaru />
-      <SkriningHIVTerbaru />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -187,52 +184,17 @@ const Home = () => {
                     </Collapse>
                   </>
                 );
-                // !menu.accordion ? (
-                //   <Button
-                //     sx={{ width: "100%", minHeight: "44px", color: "white" }}
-                //   >
-                //     {menu.pageName}
-                //   </Button>
-                // ) : (
-                //   <Accordion
-                //     expanded={expanded == menu.pageName}
-                //     onChange={handleChange(menu.pageName)}
-                //     sx={{
-                //       bgcolor: "#282733",
-                //       color: "white",
-                //       border: "none",
-                //       boxShadow: "none", // Remove box shadow
-                //       "&.Mui-expanded": {
-                //         margin: 0, // Remove margin when expanded
-                //       },
-                //       "&:before": {
-                //         display: "none", // Remove the default separator line
-                //       },
-                //     }}
-                //   >
-                //     <AccordionSummary
-                //       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-                //     >
-                //       <Typography sx={{ width: "100%", flexShrink: 0 }}>
-                //         {menu.pageName}
-                //       </Typography>
-                //     </AccordionSummary>
-                //     <AccordionDetails>
-                //       <Typography>
-                //         Nulla facilisi. Phasellus sollicitudin nulla et quam
-                //         mattis feugiat. Aliquam eget maximus est, id dignissim
-                //         quam.
-                //       </Typography>
-                //     </AccordionDetails>
-                //   </Accordion>
-                // );
               })}
             </List>
           </Box>
         </Fade>
       </Modal>
+      <DataMasuk />
+      <ReservasiTerbaru />
+      <AkuPeduliTerbaru />
+      <SkriningHIVTerbaru />
     </>
   );
 };
 
-export default Home;
+export default Dashboard;

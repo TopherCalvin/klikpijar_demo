@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useMediaQuery } from "@mui/material";
-import { useFetchProvince } from "../../hooks/useFetchProvince";
+import { useFetchProvince } from "../hooks/useFetchProvince";
 
 const DataViewNotifikasiPasangan = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
