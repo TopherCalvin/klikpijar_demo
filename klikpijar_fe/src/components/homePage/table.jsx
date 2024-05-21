@@ -26,7 +26,7 @@ const DataViewNotifikasiPasangan = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {province.data.map((row) => (
+          {province.data?.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.id}

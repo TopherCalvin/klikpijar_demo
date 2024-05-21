@@ -18,10 +18,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import "../components/homePage/css/header.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DataViewNotifikasiPasangan from "../components/homePage/table";
+import ReservasiTerbaru from "../components/homePage/Reservasi terbaru";
+import AkuPeduliTerbaru from "../components/homePage/Akupeduli terbaru";
+import SkriningHIVTerbaru from "../components/homePage/Skrining HIV terbaru";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
   const page = [
     { pageName: "Dashboard", pagePath: "/", accordion: false },
     {
@@ -61,7 +67,7 @@ const Home = () => {
       ],
       accordion: true,
     },
-    { pageName: "Users", path: "/6", accordion: false },
+    { pageName: "Users", pagePath: "/6", accordion: false },
     {
       pageName: "Pengaturan",
       child: [{ childName: "Fasyankes", pagePath: "/" }],
@@ -78,7 +84,12 @@ const Home = () => {
       <AppBar position="sticky" sx={{ bgcolor: "black" }}>
         <Box className="header">
           <Box className="header-mobile">
-            <IconButton href="/" disableRipple>
+            <IconButton
+              onClick={() => {
+                navigate("/");
+              }}
+              disableRipple
+            >
               <img
                 className="logo-transition"
                 height={"40px"}
@@ -104,7 +115,9 @@ const Home = () => {
           </Box>
         </Box>
       </AppBar>
-
+      <ReservasiTerbaru />
+      <AkuPeduliTerbaru />
+      <SkriningHIVTerbaru />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -125,18 +138,28 @@ const Home = () => {
               height: "100%",
             }}
           >
-            <List sx={{ width: "100%" }} component={"nav"}>
+            <List sx={{ width: "100%", color: "white" }} component={"nav"}>
               {page.map((menu) => {
                 return (
                   <>
-                    <ListItemButton onClick={handleChange(menu.pageName)}>
+                    <ListItemButton
+                      onClick={
+                        menu.accordion
+                          ? handleChange(menu.pageName)
+                          : () => {
+                              navigate(menu.pagePath);
+                            }
+                      }
+                    >
                       <ListItemIcon></ListItemIcon>
                       <ListItemText primary={menu.pageName} />
-                      {expanded == menu.pageName ? (
-                        <ExpandLessIcon />
-                      ) : (
-                        <ExpandMoreIcon />
-                      )}
+                      {menu.accordion ? (
+                        expanded == menu.pageName ? (
+                          <ExpandLessIcon />
+                        ) : (
+                          <ExpandMoreIcon />
+                        )
+                      ) : null}
                     </ListItemButton>
                     <Collapse
                       in={expanded == menu.pageName}
@@ -144,12 +167,22 @@ const Home = () => {
                       unmountOnExit
                     >
                       <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <FiberManualRecordIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Starred" />
-                        </ListItemButton>
+                        {menu.accordion &&
+                          menu.child.map((child) => {
+                            return (
+                              <ListItemButton
+                                sx={{ pl: 4 }}
+                                onClick={() => {
+                                  navigate(child.pagePath);
+                                }}
+                              >
+                                <ListItemIcon>
+                                  <FiberManualRecordIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={child.childName} />
+                              </ListItemButton>
+                            );
+                          })}
                       </List>
                     </Collapse>
                   </>
