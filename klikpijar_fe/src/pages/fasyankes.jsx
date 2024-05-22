@@ -6,17 +6,13 @@ import DataMasuk from "../components/dashboard/dataMasuk";
 import Footer from "../components/footer";
 import Header from "../components/header";
 
-const Dashboard = () => {
+const Fasyankes = () => {
   return (
     <>
       <Header />
-      <DataMasuk />
-      <ReservasiTerbaru />
-      <AkuPeduliTerbaru />
-      <SkriningHIVTerbaru />
       <Footer />
     </>
   );
 };
 
-export default Dashboard;
+export default Fasyankes;
