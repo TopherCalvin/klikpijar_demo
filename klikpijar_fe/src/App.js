@@ -1,5 +1,4 @@
 import { RouterProvider } from "react-router-dom";
-import "./App.css";
 import routes from "./routes/routes";
 import { ThemeProvider } from "@mui/material";
 import customTheme from "./components/customTheme";

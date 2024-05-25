@@ -14,3 +14,18 @@
   width: 100%;
   max-width: 1024px;
 }
+
+@media screen and (min-width: 1024px) {
+  .header-mobile,
+  .sideBar {
+    display: none;
+  }
+  .header {
+    height: 65px;
+    justify-content: space-between;
+    position: absolute;
+    color: white;
+    background-color: #000;
+    z-index: 2;
+  }
+}
