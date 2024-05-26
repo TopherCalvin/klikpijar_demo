@@ -196,10 +196,6 @@ const Reservasi = () => {
     console.log(Object.keys(rowSelection));
   };
 
-  const columns = [
-    // your columns
-  ];
-
   return (
     <>
       <div
