@@ -1,8 +1,8 @@
-import { Box, Toolbar, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { AddBox, ArrowDownward, Delete, Edit } from "@mui/icons-material";
+import { MaterialReactTable } from "material-react-table";
+import { useState } from "react";
 
-const mockDataReservasi = [
+const Data = [
   {
     id: 1,
     camCode: "Jon Snow",
@@ -177,73 +177,107 @@ const mockDataReservasi = [
 ];
 
 const Reservasi = () => {
-  const [selectedRows, setSelectedRows] = useState([]);
-  const handleSelectionChange = (newSelection) => {
-    setSelectedRows(newSelection);
+  const [mockDataReservasi, setMockDataReservasi] = useState(Data);
+  const [rowSelection, setRowSelection] = useState({});
+
+  const handleCreateReservation = () => {
+    // Create new reservation logic
+    console.log("Create new reservation");
   };
+
+  const handleEditReservation = () => {
+    // Edit selected reservation logic
+    console.log("Edit selected reservation:", rowSelection);
+  };
+
+  const handleDeleteReservation = () => {
+    // Delete selected reservation logic
+    console.log("Delete selected reservation:", rowSelection);
+    console.log(Object.keys(rowSelection));
+  };
+
   const columns = [
-    { field: "id", headerName: "No.", flex: 0.5 },
-    { field: "camCode", headerName: "Cam Code", flex: 1 },
-    { field: "layanan", headerName: "Layanan Yang Dipilih", flex: 1 },
-    { field: "janjiTemu", headerName: "Janji Temu Untuk", flex: 1 },
-    { field: "age", headerName: "Umur", flex: 1 },
-    {
-      field: "kelamin",
-      headerName: "Mengidentifikasi dirinya sebagai",
-      flex: 1,
-    },
-    { field: "jadwal", headerName: "Jadwal Reservasi", flex: 1 },
-    { field: "UIC", headerName: "UIC", flex: 1 },
-    { field: "NIKBPJS", headerName: "NIK/BPJS", flex: 1 },
-    { field: "Antrian", headerName: "No. Antri", flex: 0.5 },
-    { field: "puskesmas", headerName: "Puskesmas", flex: 1 },
-    { field: "hadir", headerName: "Hadir", flex: 1 },
-    { field: "hasilTes", headerName: "Hasil Tes", flex: 1 },
-    { field: "inisiasiARV", headerName: "Inisiasi ARV", flex: 1 },
-    { field: "phone", headerName: "HP/WA", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
-    {
-      field: "tanggalReservasi",
-      headerName: "Tanggal submit Reservasi",
-      flex: 1,
-    },
+    // your columns
   ];
 
-  useEffect(() => {
-    console.log(selectedRows);
-  }, [selectedRows]);
   return (
-    <Box
-      m="40px 0 0 0"
-      paddingTop={"100px"}
-      height="75vh"
-      sx={{
-        "& .MuiDataGrid-columnHeader": {
-          fontWeight: "700 !important",
-        },
-        "& .MuiDataGrid-virtualScroller": {
-          backgroundColor: "#ffffff",
-        },
-        "& .MuiDataGrid-footerContainer": {
-          backgroundColor: "#ffffff",
-        },
-        "& .MuiCheckbox-root": {
-          color: `black !important`,
-        },
-        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-          color: `green !important`,
-        },
-      }}
-    >
-      <DataGrid
-        checkboxSelection
-        rows={mockDataReservasi}
-        columns={columns}
-        components={{ Toolbar: <GridToolbarQuickFilter /> }}
-        onSelectionModelChange={handleSelectionChange}
-        selectionModel={selectedRows}
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          marginBottom: "1rem",
+        }}
+      >
+        <button onClick={handleCreateReservation}>Create Reservation</button>
+      </div>
+      <MaterialReactTable
+        title="Reservasi"
+        data={mockDataReservasi}
+        columns={[
+          { accessorKey: "id", header: "No.", type: "numeric" },
+          { accessorKey: "camCode", header: "Cam Code" },
+          { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
+          { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
+          { accessorKey: "age", header: "Umur", type: "numeric" },
+          {
+            accessorKey: "kelamin",
+            header: "Mengidentifikasi dirinya sebagai",
+          },
+          { accessorKey: "jadwal", header: "Jadwal Reservasi" },
+          { accessorKey: "UIC", header: "UIC" },
+          { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
+          { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
+          { accessorKey: "puskesmas", header: "Puskesmas" },
+          { accessorKey: "hadir", header: "Hadir" },
+          { accessorKey: "hasilTes", header: "Hasil Tes" },
+          { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
+          { accessorKey: "phone", header: "HP/WA" },
+          { accessorKey: "email", header: "Email" },
+          {
+            accessorKey: "tanggalReservasi",
+            header: "Tanggal submit Reservasi",
+          },
+        ]}
+        state={{
+          showSelectAllCheckbox: true,
+          showSelectColumnCheckboxes: true,
+          rowSelection,
+        }}
+        enableRowSelection
+        getRowId={(row) => row.userId} //give each row a more useful id
+        onRowSelectionChange={setRowSelection} //connect internal row selection state to your own
+        muiToolbarAlertBannerProps={
+          rowSelection
+            ? {
+                color: "primary",
+                children: (
+                  <div>
+                    {Object.keys(rowSelection).length < 2 && (
+                      <button onClick={handleEditReservation}>
+                        <Edit /> Edit
+                      </button>
+                    )}
+                    <button onClick={handleDeleteReservation}>
+                      <Delete /> Delete
+                    </button>
+                  </div>
+                ),
+              }
+            : undefined
+        }
+        icons={{
+          Add: AddBox,
+          ArrowDownward: ArrowDownward,
+          Edit: Edit,
+          Delete: Delete,
+        }}
+        options={{
+          filtering: true,
+          selection: true,
+        }}
       />
-    </Box>
+    </>
   );
 };
 
