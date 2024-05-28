@@ -3,100 +3,91 @@ import {
   Box,
   IconButton,
   Button,
-  Modal,
-  Fade,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./css/header.css";
+import SideMenu from "./sideMenu";
 
 const Header = () => {
-  const [expanded, setExpanded] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [appear, setAppear] = useState(false);
   const [user, setUser] = useState(false);
   const currentPath = useLocation();
   const navigate = useNavigate();
   const md = useMediaQuery("(min-width: 1024px)");
   const page = [
     {
-      pageName: "Dashboard",
-      pagePath: "/",
-      accordion: false,
       title: "Dashboard",
+      to: "/",
+      icon: <HomeOutlinedIcon />,
     },
     {
-      pageName: "Reservasi",
-      child: [
-        { childName: "Data Test HIV", pagePath: "/", title: "" },
-        { childName: "Data Refil ARV", pagePath: "/", title: "" },
-        { childName: "Data Viral Load", pagePath: "/", title: "" },
+      title: "Reservasi",
+      subMenu: [
+        { title: "Data Test HIV", to: "/" },
+        { title: "Data Refil ARV", to: "/" },
+        { title: "Data Viral Load", to: "/" },
       ],
-      accordion: true,
+      icon: <CalendarTodayOutlinedIcon />,
     },
     {
-      pageName: "Notifikasi Pasangan",
-      child: [
-        { childName: "Data View", pagePath: "/", title: "" },
-        { childName: "Data Komunitas", pagePath: "/", title: "" },
+      title: "Notifikasi Pasangan",
+      subMenu: [
+        { title: "Data View", to: "/" },
+        { title: "Data Komunitas", to: "/" },
       ],
-      accordion: true,
     },
     {
-      pageName: "Skrining HIV Mandiri",
-      child: [{ childName: "Data View", pagePath: "/", title: "" }],
-      accordion: true,
+      title: "Skrining HIV Mandiri",
+      subMenu: [{ title: "Data View", to: "/" }],
     },
     {
-      pageName: "Info Prep",
-      child: [{ childName: "Data View", pagePath: "/", title: "" }],
-      accordion: true,
+      title: "Info Prep",
+      subMenu: [{ title: "Data View", to: "/" }],
+      icon: <CalendarTodayOutlinedIcon />,
     },
     {
-      pageName: "Cascade",
-      child: [
-        { childName: "Cascade Total", pagePath: "/", title: "" },
-        { childName: "Cascade Tes HIV", pagePath: "/", title: "" },
-        { childName: "Cascade Refil ARV", pagePath: "/", title: "" },
-        { childName: "Cascade VIral Load", pagePath: "/", title: "" },
+      title: "Cascade",
+      subMenu: [
+        { title: "Cascade Total", to: "/" },
+        { title: "Cascade Tes HIV", to: "/" },
+        { title: "Cascade Refil ARV", to: "/" },
+        { title: "Cascade VIral Load", to: "/" },
       ],
-      accordion: true,
+      icon: <BarChartOutlinedIcon />,
     },
-    { pageName: "Users", pagePath: "/6", accordion: false, title: "" },
+    { title: "Users", to: "/", icon: <PersonOutlinedIcon /> },
     {
-      pageName: "Pengaturan",
-      child: [
+      title: "Help",
+      to: "/",
+      icon: <HelpOutlineOutlinedIcon />,
+    },
+    {
+      title: "Pengaturan",
+      subMenu: [
         {
-          childName: "Fasyankes",
-          pagePath: "/Pengaturan/Fasyankes",
-          title: "Dataview Fasyankes/Klinik",
+          title: "Fasyankes",
+          to: "/Pengaturan/Fasyankes",
         },
       ],
-      accordion: true,
     },
   ];
 
-  const handleChange = (pageExpanded) => (event, isExpanded) => {
-    setExpanded(!expanded || expanded != pageExpanded ? pageExpanded : false);
-  };
-
   return (
     <>
-      <AppBar position="sticky" sx={{ bgcolor: "black" }}>
+      <AppBar position="sticky">
         <Box className="header">
           {/* HEADER MOBILE */}
           <Box className="header-mobile">
@@ -120,9 +111,12 @@ const Header = () => {
                 variant="text"
                 disableRipple
                 onClick={() => {
-                  setOpen(true);
+                  setIsCollapsed(!isCollapsed);
+                  setAppear(!appear);
                 }}
-                sx={{ transform: open ? "rotate(90deg)" : "rotate(270deg)" }}
+                sx={{
+                  transform: isCollapsed ? "rotate(90deg)" : "rotate(270deg)",
+                }}
               >
                 <LeaderboardIcon />
               </Button>
@@ -139,11 +133,41 @@ const Header = () => {
           </Box>
 
           {/* TULISAN NAVBAR DESKTOP */}
-          <Box width={"150px"} display={"flex"} justifyContent={"flex-end"}>
+          <Box
+            display={md ? "flex" : "none"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            onMouseEnter={() => {
+              md && setAppear(true);
+            }}
+            onMouseLeave={() => {
+              md && setAppear(false);
+            }}
+            sx={{
+              transition: "all 1s ease-in-out",
+              minWidth: "20%",
+              height: "100%",
+            }}
+          >
+            <IconButton
+              className="mobile-only"
+              onClick={() => {
+                navigate("/");
+              }}
+              sx={{ display: appear ? "block" : "none" }}
+              disableRipple
+            >
+              <img
+                className="logo-transition"
+                height={"50px"}
+                alt="Klikpijar"
+                src={"https://klikpijar.id/public/assets/img/co.png"}
+              />
+            </IconButton>
             <IconButton
               color="inherit"
               onClick={() => {
-                setOpen(!open);
+                setIsCollapsed(!isCollapsed);
               }}
             >
               <MenuIcon fontSize="large" />
@@ -194,185 +218,21 @@ const Header = () => {
           </Box>
         </Box>
 
-        {/* SIDE BAR DESKTOP */}
-        {/* <Box
-          sx={{
-            position: "absolute",
-            top: "0",
-            left: "0",
-            width: 400,
-            bgcolor: "black",
-            height: "100vh",
-            zIndex: "100",
-            display: open && md ? "flex" : "none",
+        {/* SIDE BAR */}
+        <Box
+          position={"absolute"}
+          marginTop={md ? "65px" : "56px"}
+          sx={{ display: appear ? "block" : "none" }}
+          onMouseEnter={() => {
+            md && setAppear(true);
+          }}
+          onMouseLeave={() => {
+            md && setAppear(false);
           }}
         >
-          <List sx={{ width: "100%", color: "white" }} component={"nav"}>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-around"}
-            >
-              <Box>
-                <ListItemIcon></ListItemIcon>
-                <IconButton
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  disableRipple
-                >
-                  <img
-                    className="logo-transition"
-                    height={"50px"}
-                    alt="Klikpijar"
-                    src={"https://klikpijar.id/public/assets/img/co.png"}
-                  />
-                </IconButton>
-              </Box>
-              <IconButton
-                color="inherit"
-                onClick={() => {
-                  setOpen(!open);
-                }}
-              >
-                <HighlightOffOutlinedIcon fontSize="large" />
-              </IconButton>
-            </Box>
-            {page.map((menu) => {
-              return (
-                <>
-                  <ListItemButton
-                    onClick={
-                      menu.accordion
-                        ? handleChange(menu.pageName)
-                        : () => {
-                            navigate(menu.pagePath);
-                          }
-                    }
-                  >
-                    <ListItemIcon></ListItemIcon>
-                    <ListItemText primary={menu.pageName} />
-                    {menu.accordion ? (
-                      expanded == menu.pageName ? (
-                        <ExpandLessIcon />
-                      ) : (
-                        <ExpandMoreIcon />
-                      )
-                    ) : null}
-                  </ListItemButton>
-                  <Collapse
-                    in={expanded == menu.pageName}
-                    timeout="auto"
-                    unmountOnExit
-                  >
-                    <List component="div" disablePadding>
-                      {menu.accordion &&
-                        menu.child.map((child) => {
-                          return (
-                            <ListItemButton
-                              sx={{ pl: 4 }}
-                              onClick={() => {
-                                navigate(child.pagePath);
-                              }}
-                            >
-                              <ListItemIcon>
-                                <FiberManualRecordIcon
-                                  fontSize="10px"
-                                  sx={{ color: "white" }}
-                                />
-                              </ListItemIcon>
-                              <ListItemText primary={child.childName} />
-                            </ListItemButton>
-                          );
-                        })}
-                    </List>
-                  </Collapse>
-                </>
-              );
-            })}
-          </List>
-        </Box> */}
+          <SideMenu page={page} isCollapsed={isCollapsed} />
+        </Box>
       </AppBar>
-
-      {/* SIDE BAR MOBILE */}
-      {/* <Modal
-        className="sideBar"
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={md ? false : open}
-        onClose={() => {
-          setOpen(false);
-        }}
-        closeAfterTransition
-      >
-        <Fade in={md ? false : open}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: 400,
-              bgcolor: "#282733",
-              height: "100%",
-            }}
-          >
-            <List sx={{ width: "100%", color: "white" }} component={"nav"}>
-              {page.map((menu) => {
-                return (
-                  <>
-                    <ListItemButton
-                      onClick={
-                        menu.accordion
-                          ? handleChange(menu.pageName)
-                          : () => {
-                              navigate(menu.pagePath);
-                            }
-                      }
-                    >
-                      <ListItemIcon></ListItemIcon>
-                      <ListItemText primary={menu.pageName} />
-                      {menu.accordion ? (
-                        expanded == menu.pageName ? (
-                          <ExpandLessIcon />
-                        ) : (
-                          <ExpandMoreIcon />
-                        )
-                      ) : null}
-                    </ListItemButton>
-                    <Collapse
-                      in={expanded == menu.pageName}
-                      timeout="auto"
-                      unmountOnExit
-                    >
-                      <List component="div" disablePadding>
-                        {menu.accordion &&
-                          menu.child.map((child) => {
-                            return (
-                              <ListItemButton
-                                sx={{ pl: 4 }}
-                                onClick={() => {
-                                  navigate(child.pagePath);
-                                }}
-                              >
-                                <ListItemIcon>
-                                  <FiberManualRecordIcon
-                                    fontSize="10px"
-                                    sx={{ color: "white" }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText primary={child.childName} />
-                              </ListItemButton>
-                            );
-                          })}
-                      </List>
-                    </Collapse>
-                  </>
-                );
-              })}
-            </List>
-          </Box>
-        </Fade>
-      </Modal> */}
 
       {/* JUDUL HALAMAN */}
       <Box
@@ -393,14 +253,12 @@ const Header = () => {
           color={"white"}
         >
           {page.map((val) => {
-            if (val.accordion) {
-              return val.child.map((child) => {
-                return currentPath.pathname == child.pagePath
-                  ? child.title
-                  : "";
+            if (val?.subMenu) {
+              return val.subMenu.map((child) => {
+                return currentPath.pathname == child.to ? child.title : "";
               });
             } else {
-              return currentPath.pathname == val.pagePath && val.title;
+              return currentPath.pathname == val.to && val.title;
             }
           })}
         </Typography>

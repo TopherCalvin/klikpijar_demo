@@ -1,4 +1,5 @@
 import { AddBox, ArrowDownward, Delete, Edit } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
 import { MaterialReactTable } from "material-react-table";
 import { useState } from "react";
 
@@ -198,81 +199,148 @@ const Reservasi = () => {
 
   return (
     <>
-      <div
-        style={{
+      <Box
+        sx={{
+          width: "100%",
           display: "flex",
-          justifyContent: "flex-start",
-          marginBottom: "1rem",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <button onClick={handleCreateReservation}>Create Reservation</button>
-      </div>
-      <MaterialReactTable
-        title="Reservasi"
-        data={mockDataReservasi}
-        columns={[
-          { accessorKey: "id", header: "No.", type: "numeric" },
-          { accessorKey: "camCode", header: "Cam Code" },
-          { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
-          { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
-          { accessorKey: "age", header: "Umur", type: "numeric" },
-          {
-            accessorKey: "kelamin",
-            header: "Mengidentifikasi dirinya sebagai",
-          },
-          { accessorKey: "jadwal", header: "Jadwal Reservasi" },
-          { accessorKey: "UIC", header: "UIC" },
-          { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
-          { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
-          { accessorKey: "puskesmas", header: "Puskesmas" },
-          { accessorKey: "hadir", header: "Hadir" },
-          { accessorKey: "hasilTes", header: "Hasil Tes" },
-          { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
-          { accessorKey: "phone", header: "HP/WA" },
-          { accessorKey: "email", header: "Email" },
-          {
-            accessorKey: "tanggalReservasi",
-            header: "Tanggal submit Reservasi",
-          },
-        ]}
-        state={{
-          showSelectAllCheckbox: true,
-          showSelectColumnCheckboxes: true,
-          rowSelection,
-        }}
-        enableRowSelection
-        getRowId={(row) => row.userId} //give each row a more useful id
-        onRowSelectionChange={setRowSelection} //connect internal row selection state to your own
-        muiToolbarAlertBannerProps={
-          rowSelection
-            ? {
-                color: "primary",
-                children: (
-                  <div>
-                    {Object.keys(rowSelection).length < 2 && (
-                      <button onClick={handleEditReservation}>
-                        <Edit /> Edit
-                      </button>
-                    )}
-                    <button onClick={handleDeleteReservation}>
-                      <Delete /> Delete
-                    </button>
-                  </div>
-                ),
-              }
-            : undefined
-        }
-        icons={{
-          Add: AddBox,
-          ArrowDownward: ArrowDownward,
-          Edit: Edit,
-          Delete: Delete,
-        }}
-        options={{
-          filtering: true,
-          selection: true,
-        }}
-      />
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "90%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "15px",
+          }}
+        >
+          <Typography
+            variant="body1"
+            color="initial"
+            sx={{
+              width: "100%",
+              height: "50px",
+              display: "flex",
+              bgcolor: "#4c7c9e",
+              borderRadius: "3px 3px 0 0",
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box paddingLeft={"10px"}>Dataview - Reservasi</Box>
+            <Box sx={{ paddingRight: "10px" }}>
+              <Button
+                onClick={handleCreateReservation}
+                sx={{
+                  color: "white",
+                  bgcolor: "#1ec8b7",
+                }}
+                variant="outlined"
+              >
+                Excel
+              </Button>
+            </Box>
+          </Typography>
+        </Box>
+        <Box width={"100%"} maxWidth={"90%"}>
+          <MaterialReactTable
+            title="Reservasi"
+            data={mockDataReservasi}
+            columns={[
+              {
+                accessorKey: "id",
+                header: "No.",
+                type: "numeric",
+              },
+              { accessorKey: "camCode", header: "Cam Code" },
+              { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
+              { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
+              { accessorKey: "age", header: "Umur", type: "numeric" },
+              {
+                accessorKey: "kelamin",
+                header: "Mengidentifikasi dirinya sebagai",
+              },
+              { accessorKey: "jadwal", header: "Jadwal Reservasi" },
+              { accessorKey: "UIC", header: "UIC" },
+              { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
+              { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
+              { accessorKey: "puskesmas", header: "Puskesmas" },
+              { accessorKey: "hadir", header: "Hadir" },
+              { accessorKey: "hasilTes", header: "Hasil Tes" },
+              { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
+              { accessorKey: "phone", header: "HP/WA" },
+              { accessorKey: "email", header: "Email" },
+              {
+                accessorKey: "tanggalReservasi",
+                header: "Tanggal submit Reservasi",
+              },
+            ]}
+            state={{
+              showSelectAllCheckbox: true,
+              showSelectColumnCheckboxes: true,
+              rowSelection,
+              // pagination: { pageIndex: 0, pageSize: 5 },
+            }}
+            enableRowSelection
+            getRowId={(row) => row.id} //give each row a more useful id
+            onRowSelectionChange={setRowSelection} //connect internal row selection state to your own
+            muiToolbarAlertBannerProps={
+              rowSelection
+                ? {
+                    color: "primary",
+                    children: (
+                      <Box sx={{ display: "flex", gap: "10px" }}>
+                        {Object.keys(rowSelection).length < 2 && (
+                          <Button
+                            onClick={handleEditReservation}
+                            sx={{
+                              color: "white",
+                              bgcolor: "#1ec8b7",
+                            }}
+                            variant="outlined"
+                          >
+                            <Edit /> Edit
+                          </Button>
+                        )}
+                        <Button
+                          onClick={handleDeleteReservation}
+                          sx={{
+                            color: "white",
+                            bgcolor: "red",
+                          }}
+                          variant="outlined"
+                        >
+                          <Delete /> Delete
+                        </Button>
+                      </Box>
+                    ),
+                  }
+                : undefined
+            }
+            icons={{
+              Add: AddBox,
+              ArrowDownward: ArrowDownward,
+              Edit: Edit,
+              Delete: Delete,
+            }}
+            options={{
+              filtering: true,
+              selection: true,
+            }}
+            muiPaginationProps={{
+              shape: "rounded",
+            }}
+            paginationDisplayMode="pages"
+          />
+        </Box>
+      </Box>
     </>
   );
 };

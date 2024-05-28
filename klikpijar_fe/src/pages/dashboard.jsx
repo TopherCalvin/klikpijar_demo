@@ -7,7 +7,6 @@ import SideMenu from "../components/sideMenu";
 const Dashboard = () => {
   return (
     <>
-      <SideMenu />
       <DataMasuk />
       <ReservasiTerbaru />
       <AkuPeduliTerbaru />

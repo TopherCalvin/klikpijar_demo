@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Typography } from "@mui/material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import { Typography, colors } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Item({ title, to, icon, selected, setSelected, subMenu, navigate }) {
@@ -38,71 +33,37 @@ function Item({ title, to, icon, selected, setSelected, subMenu, navigate }) {
   );
 }
 
-const SideMenu = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const SideMenu = ({ page, isCollapsed }) => {
   const [selected, setSelected] = useState("Dashboard");
   const navigate = useNavigate();
-  const page = [
-    {
-      title: "Dashboard",
-      to: "/",
-      icon: <HomeOutlinedIcon />,
-    },
-    {
-      title: "Reservasi",
-      subMenu: [
-        { title: "Data Test HIV", to: "/" },
-        { title: "Data Refil ARV", to: "/" },
-        { title: "Data Viral Load", to: "/" },
-      ],
-      icon: <CalendarTodayOutlinedIcon />,
-    },
-    {
-      title: "Notifikasi Pasangan",
-      subMenu: [
-        { title: "Data View", to: "/" },
-        { title: "Data Komunitas", to: "/" },
-      ],
-    },
-    {
-      title: "Skrining HIV Mandiri",
-      subMenu: [{ title: "Data View", to: "/" }],
-    },
-    {
-      title: "Info Prep",
-      subMenu: [{ title: "Data View", to: "/" }],
-      icon: <CalendarTodayOutlinedIcon />,
-    },
-    {
-      title: "Cascade",
-      subMenu: [
-        { title: "Cascade Total", to: "/" },
-        { title: "Cascade Tes HIV", to: "/" },
-        { title: "Cascade Refil ARV", to: "/" },
-        { title: "Cascade VIral Load", to: "/" },
-      ],
-      icon: <BarChartOutlinedIcon />,
-    },
-    { title: "Users", to: "/", icon: <PersonOutlinedIcon /> },
-    {
-      title: "Help",
-      to: "/",
-      icon: <HelpOutlineOutlinedIcon />,
-    },
-    {
-      title: "Pengaturan",
-      subMenu: [
-        {
-          title: "Fasyankes",
-          to: "/Pengaturan/Fasyankes",
-        },
-      ],
-    },
-  ];
 
   return (
     <Sidebar collapsed={isCollapsed}>
-      <Menu>
+      <Menu
+        menuItemStyles={{
+          button: ({ level, active }) => {
+            if (level === 0) {
+              return {
+                color: active ? "white" : "#7c87a6",
+                backgroundColor: active ? "#db1430" : "#282733",
+                "&:hover": {
+                  color: "white",
+                  backgroundColor: "#2f2e3c",
+                },
+              };
+            } else if (level === 1) {
+              return {
+                color: active ? "white" : "#7c87a6",
+                backgroundColor: "#282733",
+                "&:hover": {
+                  color: "white",
+                  backgroundColor: "#2f2e3c",
+                },
+              };
+            }
+          },
+        }}
+      >
         {page.map((val) => {
           return (
             <Item

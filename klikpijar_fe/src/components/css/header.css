@@ -10,9 +10,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
   width: 100%;
   max-width: 1024px;
+  background: #201f2b;
 }
 
 @media screen and (min-width: 1024px) {
@@ -25,7 +25,7 @@
     justify-content: space-between;
     position: absolute;
     color: white;
-    background-color: #000;
+    background-color: #201f2b;
     z-index: 2;
   }
 }
