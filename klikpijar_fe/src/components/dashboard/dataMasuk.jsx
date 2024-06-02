@@ -1,8 +1,11 @@
 import React from "react";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 
 const DataMasuk = () => {
+  const sm = useMediaQuery("(min-width: 450px)");
   const data = [];
   return (
     <Box
@@ -38,21 +41,43 @@ const DataMasuk = () => {
         >
           <Box paddingLeft={"10px"}>Data masuk</Box>
         </Typography>
-        <Box width={"100%"} display={"flex"} alignItems={"center"}>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          flexDirection={sm ? "row" : "column"}
+          alignItems={"center"}
+          bgcolor={"#ffffff"}
+        >
           <Box
             display={"flex"}
             flexDirection={"column"}
             width={"100%"}
-            padding={"20px"}
+            padding={` ${sm ? "20px 20px 20px 0" : "0"}`}
           >
             <Button
               width={"100%"}
               sx={{ display: "flex", justifyContent: "flex-start" }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
-                <EditCalendarIcon
-                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    color: "#1dc9b7",
+                    bgcolor: "#d6e1e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <EditCalendarIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
+                </Box>
                 <Box
                   display={"flex"}
                   flexDirection={"column"}
@@ -82,9 +107,25 @@ const DataMasuk = () => {
               sx={{ display: "flex", justifyContent: "flex-start" }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
-                <EditCalendarIcon
-                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    color: "#fd397a",
+                    bgcolor: "#d6e1e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FileCopyIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
+                </Box>
                 <Box
                   display={"flex"}
                   flexDirection={"column"}
@@ -109,14 +150,37 @@ const DataMasuk = () => {
                 </Box>
               </Box>
             </Button>
+          </Box>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            width={"100%"}
+            padding={`${sm ? "20px 20px 20px 0" : "0"}`}
+          >
             <Button
               width={"100%"}
               sx={{ display: "flex", justifyContent: "flex-start" }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
-                <EditCalendarIcon
-                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    color: "#fd397a",
+                    bgcolor: "#d6e1e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FileCopyIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
+                </Box>
                 <Box
                   display={"flex"}
                   flexDirection={"column"}
@@ -146,9 +210,25 @@ const DataMasuk = () => {
               sx={{ display: "flex", justifyContent: "flex-start" }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
-                <EditCalendarIcon
-                  sx={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    color: "#ffb822",
+                    bgcolor: "#d6e1e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CalendarTodayOutlinedIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
+                </Box>
                 <Box
                   display={"flex"}
                   flexDirection={"column"}

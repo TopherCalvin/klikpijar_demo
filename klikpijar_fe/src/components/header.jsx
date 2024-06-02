@@ -7,10 +7,13 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ColorizeIcon from "@mui/icons-material/Colorize";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import HandymanIcon from "@mui/icons-material/Handyman";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -36,7 +39,7 @@ const Header = () => {
     {
       title: "Reservasi",
       subMenu: [
-        { title: "Data Test HIV", to: "/" },
+        { title: "Data Test HIV", to: "/Reservasi/Dataview" },
         { title: "Data Refil ARV", to: "/" },
         { title: "Data Viral Load", to: "/" },
       ],
@@ -48,10 +51,12 @@ const Header = () => {
         { title: "Data View", to: "/" },
         { title: "Data Komunitas", to: "/" },
       ],
+      icon: <FavoriteIcon />,
     },
     {
       title: "Skrining HIV Mandiri",
       subMenu: [{ title: "Data View", to: "/" }],
+      icon: <ColorizeIcon />,
     },
     {
       title: "Info Prep",
@@ -82,6 +87,7 @@ const Header = () => {
           to: "/Pengaturan/Fasyankes",
         },
       ],
+      icon: <HandymanIcon />,
     },
   ];
 

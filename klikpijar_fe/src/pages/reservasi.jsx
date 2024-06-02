@@ -1,7 +1,18 @@
 import { AddBox, ArrowDownward, Delete, Edit } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
-import { MaterialReactTable } from "material-react-table";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import { useMemo, useState } from "react";
+import TableViewIcon from "@mui/icons-material/TableView";
 
 const Data = [
   {
@@ -178,24 +189,115 @@ const Data = [
 ];
 
 const Reservasi = () => {
-  const [mockDataReservasi, setMockDataReservasi] = useState(Data);
-  const [rowSelection, setRowSelection] = useState({});
+  const [mockDataReservasi, setMockDataReservasi] = useState(
+    Data.map((val, idx) => {
+      return { No: idx + 1, ...val };
+    })
+  );
 
   const handleCreateReservation = () => {
     // Create new reservation logic
     console.log("Create new reservation");
   };
 
-  const handleEditReservation = () => {
+  const handleEditReservation = (row) => {
     // Edit selected reservation logic
-    console.log("Edit selected reservation:", rowSelection);
+    console.log("Edit selected reservation:", row);
   };
 
-  const handleDeleteReservation = () => {
+  const handleDeleteReservation = (row) => {
     // Delete selected reservation logic
-    console.log("Delete selected reservation:", rowSelection);
-    console.log(Object.keys(rowSelection));
+    console.log("Delete selected reservation:", row);
   };
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "No",
+        header: "No.",
+        type: "numeric",
+        grow: false,
+        maxSize: 50,
+      },
+      { accessorKey: "camCode", header: "Cam Code" },
+      { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
+      { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
+      {
+        accessorKey: "age",
+        header: "Umur",
+        type: "numeric",
+        grow: false,
+        maxSize: 50,
+      },
+      {
+        accessorKey: "kelamin",
+        header: "Mengidentifikasi dirinya sebagai",
+      },
+      { accessorKey: "jadwal", header: "Jadwal Reservasi" },
+      { accessorKey: "UIC", header: "UIC" },
+      { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
+      { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
+      { accessorKey: "puskesmas", header: "Puskesmas" },
+      { accessorKey: "hadir", header: "Hadir" },
+      { accessorKey: "hasilTes", header: "Hasil Tes" },
+      { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
+      { accessorKey: "phone", header: "HP/WA" },
+      { accessorKey: "email", header: "Email" },
+      {
+        accessorKey: "tanggalReservasi",
+        header: "Tanggal submit Reservasi",
+      },
+    ],
+    []
+  );
+
+  const table = useMaterialReactTable({
+    columns,
+    data: mockDataReservasi,
+    title: "Reservasi",
+    state: {
+      // pagination: { pageIndex: 0, pageSize: 5 },
+    },
+    enableRowActions: true,
+    getRowId: (row) => row.id, //give each row a more useful id
+    renderRowActions: ({ row }) => (
+      <Box sx={{ display: "flex", gap: "1rem" }}>
+        <Tooltip title="Edit">
+          <IconButton
+            onClick={() => {
+              handleEditReservation(row.original);
+            }}
+            sx={{
+              color: "white",
+              bgcolor: "#1ec8b7",
+            }}
+          >
+            <Edit />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton
+            onClick={() => {
+              handleDeleteReservation(row.original);
+            }}
+            sx={{
+              color: "white",
+              bgcolor: "red",
+            }}
+          >
+            <Delete />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ),
+    options: {
+      filtering: true,
+    },
+    muiPaginationProps: {
+      shape: "rounded",
+    },
+    paginationDisplayMode: "pages",
+  });
 
   return (
     <>
@@ -249,96 +351,105 @@ const Reservasi = () => {
             </Box>
           </Typography>
         </Box>
+        <Box
+          bgcolor="#ffffff"
+          sx={{
+            width: "100%",
+            maxWidth: "90%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            padding={"0 0 0 15px"}
+            sx={{
+              width: "100%",
+              height: "50px",
+              display: "flex",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <Button
+              onClick={handleCreateReservation}
+              sx={{
+                display: "flex",
+                gap: "5px",
+                color: "black",
+                borderBottom: "1px solid black",
+                borderRadius: "0",
+                "&:hover": {
+                  color: "#1ec8b7",
+                  borderBottom: "1px solid #1ec8b7",
+                },
+              }}
+              variant="outlined"
+            >
+              <TableViewIcon />
+              Reservasi Tes
+            </Button>
+            <Button
+              onClick={handleCreateReservation}
+              sx={{
+                display: "flex",
+                gap: "5px",
+                color: "black",
+                borderBottom: "1px solid black",
+                borderRadius: "0",
+                "&:hover": {
+                  color: "#1ec8b7",
+                  borderBottom: "1px solid #1ec8b7",
+                },
+              }}
+              variant="outlined"
+            >
+              <TableViewIcon />
+              Reservasi Refil
+            </Button>
+            <Button
+              onClick={handleCreateReservation}
+              sx={{
+                color: "black",
+                display: "flex",
+                gap: "5px",
+                borderBottom: "1px solid black",
+                borderRadius: "0",
+                "&:hover": {
+                  color: "#1ec8b7",
+                  borderBottom: "1px solid #1ec8b7",
+                },
+              }}
+              variant="outlined"
+            >
+              <TableViewIcon />
+              Reservasi VL
+            </Button>
+          </Box>
+          <Box
+            padding={"0 0 0 15px"}
+            sx={{
+              width: "100%",
+              height: "50px",
+              display: "flex",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <TextField type="date"></TextField>
+            <TextField type="date"></TextField>
+            <TextField select></TextField>
+            <TextField select></TextField>
+            <TextField select></TextField>
+            <TextField select></TextField>
+          </Box>
+        </Box>
         <Box width={"100%"} maxWidth={"90%"}>
-          <MaterialReactTable
-            title="Reservasi"
-            data={mockDataReservasi}
-            columns={[
-              {
-                accessorKey: "id",
-                header: "No.",
-                type: "numeric",
-              },
-              { accessorKey: "camCode", header: "Cam Code" },
-              { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
-              { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
-              { accessorKey: "age", header: "Umur", type: "numeric" },
-              {
-                accessorKey: "kelamin",
-                header: "Mengidentifikasi dirinya sebagai",
-              },
-              { accessorKey: "jadwal", header: "Jadwal Reservasi" },
-              { accessorKey: "UIC", header: "UIC" },
-              { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
-              { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
-              { accessorKey: "puskesmas", header: "Puskesmas" },
-              { accessorKey: "hadir", header: "Hadir" },
-              { accessorKey: "hasilTes", header: "Hasil Tes" },
-              { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
-              { accessorKey: "phone", header: "HP/WA" },
-              { accessorKey: "email", header: "Email" },
-              {
-                accessorKey: "tanggalReservasi",
-                header: "Tanggal submit Reservasi",
-              },
-            ]}
-            state={{
-              showSelectAllCheckbox: true,
-              showSelectColumnCheckboxes: true,
-              rowSelection,
-              // pagination: { pageIndex: 0, pageSize: 5 },
-            }}
-            enableRowSelection
-            getRowId={(row) => row.id} //give each row a more useful id
-            onRowSelectionChange={setRowSelection} //connect internal row selection state to your own
-            muiToolbarAlertBannerProps={
-              rowSelection
-                ? {
-                    color: "primary",
-                    children: (
-                      <Box sx={{ display: "flex", gap: "10px" }}>
-                        {Object.keys(rowSelection).length < 2 && (
-                          <Button
-                            onClick={handleEditReservation}
-                            sx={{
-                              color: "white",
-                              bgcolor: "#1ec8b7",
-                            }}
-                            variant="outlined"
-                          >
-                            <Edit /> Edit
-                          </Button>
-                        )}
-                        <Button
-                          onClick={handleDeleteReservation}
-                          sx={{
-                            color: "white",
-                            bgcolor: "red",
-                          }}
-                          variant="outlined"
-                        >
-                          <Delete /> Delete
-                        </Button>
-                      </Box>
-                    ),
-                  }
-                : undefined
-            }
-            icons={{
-              Add: AddBox,
-              ArrowDownward: ArrowDownward,
-              Edit: Edit,
-              Delete: Delete,
-            }}
-            options={{
-              filtering: true,
-              selection: true,
-            }}
-            muiPaginationProps={{
-              shape: "rounded",
-            }}
-            paginationDisplayMode="pages"
-          />
+          <MaterialReactTable table={table} />
         </Box>
       </Box>
     </>

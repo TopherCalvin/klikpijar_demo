@@ -6,9 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 
 const ReservasiTerbaru = () => {
+  const sm = useMediaQuery("(min-width: 450px)");
   const data = [
     { tanggal: "Kolom data tidak ditemukan", camCode: "3171795" },
     { tanggal: "Kolom data tidak ditemukan", camCode: "3171795" },
@@ -34,7 +35,7 @@ const ReservasiTerbaru = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: "15px",
+          padding: sm ? "15px" : "0",
         }}
       >
         <Typography
@@ -51,7 +52,7 @@ const ReservasiTerbaru = () => {
         >
           <Box paddingLeft={"10px"}>Reservasi Terbaru</Box>
         </Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ overflow: "auto" }}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
