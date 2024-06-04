@@ -1,18 +1,23 @@
-import { AddBox, ArrowDownward, Delete, Edit } from "@mui/icons-material";
 import {
   Box,
   Button,
   IconButton,
+  MenuItem,
   TextField,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useMemo, useState } from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import TableViewIcon from "@mui/icons-material/TableView";
+import SearchIcon from "@mui/icons-material/Search";
+import { Delete, Edit } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useMemo, useState } from "react";
 
 const Data = [
   {
@@ -194,6 +199,8 @@ const Reservasi = () => {
       return { No: idx + 1, ...val };
     })
   );
+  const md = useMediaQuery("(min-width: 1024px)");
+  const sm = useMediaQuery("(min-width: 676px)");
 
   const handleCreateReservation = () => {
     // Create new reservation logic
@@ -362,13 +369,12 @@ const Reservasi = () => {
           }}
         >
           <Box
-            padding={"0 0 0 15px"}
             sx={{
-              width: "100%",
-              height: "50px",
+              minHeight: "50px",
               display: "flex",
-              display: "flex",
-              alignItems: "center",
+              flexDirection: sm ? "row" : "column",
+              alignItems: sm ? "center" : "flex-start",
+              padding: "0 15px",
               gap: "8px",
               borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
             }}
@@ -380,6 +386,7 @@ const Reservasi = () => {
                 gap: "5px",
                 color: "black",
                 borderBottom: "1px solid black",
+                width: "190px",
                 borderRadius: "0",
                 "&:hover": {
                   color: "#1ec8b7",
@@ -397,6 +404,7 @@ const Reservasi = () => {
                 display: "flex",
                 gap: "5px",
                 color: "black",
+                width: "190px",
                 borderBottom: "1px solid black",
                 borderRadius: "0",
                 "&:hover": {
@@ -414,6 +422,7 @@ const Reservasi = () => {
               sx={{
                 color: "black",
                 display: "flex",
+                width: "190px",
                 gap: "5px",
                 borderBottom: "1px solid black",
                 borderRadius: "0",
@@ -429,23 +438,85 @@ const Reservasi = () => {
             </Button>
           </Box>
           <Box
-            padding={"0 0 0 15px"}
             sx={{
-              width: "100%",
-              height: "50px",
+              padding: "15px",
               display: "flex",
+              flexDirection: md ? "row" : "column",
+              alignItems: "center",
+              gap: "8px",
+              "& .MuiTextField-root": { width: md ? "25ch" : "100%" },
+            }}
+            autoComplete="off"
+            component="form"
+            noValidate
+          >
+            <Box
+              display={"flex"}
+              flexDirection={sm ? "row" : "column"}
+              alignItems={"center"}
+            >
+              <TextField margin="none" type="date"></TextField>
+              <Box height={"50px"} bgcolor={"#f7f8fa"} display={"flex"}>
+                <IconButton disabled>
+                  <MoreHorizIcon />
+                </IconButton>
+              </Box>
+              <TextField margin="none" type="date"></TextField>
+            </Box>
+            <TextField select label="Filter by clinic" defaultValue=" ">
+              <MenuItem key={""} value={" "}>
+                Semua klinik
+              </MenuItem>
+            </TextField>
+            <TextField select label="Filter by cam" defaultValue=" ">
+              <MenuItem key={""} value={" "}>
+                Semua Camcode
+              </MenuItem>
+            </TextField>
+            <TextField select label="Filter by Pelayanan" defaultValue=" ">
+              <MenuItem key={""} value={" "}>
+                Semua Pelayanan
+              </MenuItem>
+            </TextField>
+            <TextField select label="Filter by EPiC/Non EPiC" defaultValue=" ">
+              <MenuItem key={""} value={" "}>
+                Semua data
+              </MenuItem>
+            </TextField>
+          </Box>
+          <Box
+            sx={{
+              padding: "0 0 15px 15px",
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
             }}
           >
-            <TextField type="date"></TextField>
-            <TextField type="date"></TextField>
-            <TextField select></TextField>
-            <TextField select></TextField>
-            <TextField select></TextField>
-            <TextField select></TextField>
+            <Button
+              onClick={handleCreateReservation}
+              sx={{
+                color: "white",
+                bgcolor: "#5867dd",
+                padding: "10px",
+                width: "100px",
+              }}
+              variant="outlined"
+            >
+              <SearchIcon />
+              Search
+            </Button>
+            <Button
+              onClick={handleCreateReservation}
+              sx={{
+                padding: "10px",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
+                width: "100px",
+              }}
+              variant="outlined"
+            >
+              <CloseIcon />
+              Reset
+            </Button>
           </Box>
         </Box>
         <Box width={"100%"} maxWidth={"90%"}>
