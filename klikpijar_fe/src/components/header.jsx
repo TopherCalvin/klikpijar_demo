@@ -228,7 +228,11 @@ const Header = () => {
         <Box
           position={"absolute"}
           marginTop={md ? "65px" : "56px"}
-          sx={{ display: appear ? "block" : "none" }}
+          sx={{
+            display: appear ? "block" : "none",
+            height: "100vh",
+            bgcolor: "#282733",
+          }}
           onMouseEnter={() => {
             md && setAppear(true);
           }}

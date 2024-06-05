@@ -2,8 +2,6 @@ import {
   Box,
   Button,
   IconButton,
-  MenuItem,
-  TextField,
   Tooltip,
   Typography,
   useMediaQuery,
@@ -12,12 +10,12 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import TableViewIcon from "@mui/icons-material/TableView";
-import SearchIcon from "@mui/icons-material/Search";
 import { Delete, Edit } from "@mui/icons-material";
-import CloseIcon from "@mui/icons-material/Close";
 import { useMemo, useState } from "react";
+import moment from "moment/moment";
+import Filter from "../components/filter";
+import { useFetchPuskes } from "../hooks/useFetchPuskes";
 
 const Data = [
   {
@@ -199,8 +197,22 @@ const Reservasi = () => {
       return { No: idx + 1, ...val };
     })
   );
+  const { puskes, fetch } = useFetchPuskes();
+  console.log(puskes);
+  const [filter, setFilter] = useState({
+    dateFrom: moment().format("yyyy-MM-DD"),
+    dateTo: moment().format("yyyy-MM-DD"),
+  });
   const md = useMediaQuery("(min-width: 1024px)");
   const sm = useMediaQuery("(min-width: 676px)");
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      [name]: value,
+    }));
+  };
 
   const handleCreateReservation = () => {
     // Create new reservation logic
@@ -437,87 +449,7 @@ const Reservasi = () => {
               Reservasi VL
             </Button>
           </Box>
-          <Box
-            sx={{
-              padding: "15px",
-              display: "flex",
-              flexDirection: md ? "row" : "column",
-              alignItems: "center",
-              gap: "8px",
-              "& .MuiTextField-root": { width: md ? "25ch" : "100%" },
-            }}
-            autoComplete="off"
-            component="form"
-            noValidate
-          >
-            <Box
-              display={"flex"}
-              flexDirection={sm ? "row" : "column"}
-              alignItems={"center"}
-            >
-              <TextField margin="none" type="date"></TextField>
-              <Box height={"50px"} bgcolor={"#f7f8fa"} display={"flex"}>
-                <IconButton disabled>
-                  <MoreHorizIcon />
-                </IconButton>
-              </Box>
-              <TextField margin="none" type="date"></TextField>
-            </Box>
-            <TextField select label="Filter by clinic" defaultValue=" ">
-              <MenuItem key={""} value={" "}>
-                Semua klinik
-              </MenuItem>
-            </TextField>
-            <TextField select label="Filter by cam" defaultValue=" ">
-              <MenuItem key={""} value={" "}>
-                Semua Camcode
-              </MenuItem>
-            </TextField>
-            <TextField select label="Filter by Pelayanan" defaultValue=" ">
-              <MenuItem key={""} value={" "}>
-                Semua Pelayanan
-              </MenuItem>
-            </TextField>
-            <TextField select label="Filter by EPiC/Non EPiC" defaultValue=" ">
-              <MenuItem key={""} value={" "}>
-                Semua data
-              </MenuItem>
-            </TextField>
-          </Box>
-          <Box
-            sx={{
-              padding: "0 0 15px 15px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <Button
-              onClick={handleCreateReservation}
-              sx={{
-                color: "white",
-                bgcolor: "#5867dd",
-                padding: "10px",
-                width: "100px",
-              }}
-              variant="outlined"
-            >
-              <SearchIcon />
-              Search
-            </Button>
-            <Button
-              onClick={handleCreateReservation}
-              sx={{
-                padding: "10px",
-                border: "1px solid rgba(0, 0, 0, 0.1)",
-                width: "100px",
-              }}
-              variant="outlined"
-            >
-              <CloseIcon />
-              Reset
-            </Button>
-          </Box>
+          <Filter filter={filter} handleFilterChange={handleFilterChange} />
         </Box>
         <Box width={"100%"} maxWidth={"90%"}>
           <MaterialReactTable table={table} />
