@@ -33,50 +33,50 @@ const Header = () => {
   const page = [
     {
       title: "Dashboard",
-      to: "/",
+      to: "/admin",
       icon: <HomeOutlinedIcon />,
     },
     {
       title: "Reservasi",
       subMenu: [
-        { title: "Data Test HIV", to: "/Reservasi/Dataview" },
-        { title: "Data Refil ARV", to: "/" },
-        { title: "Data Viral Load", to: "/" },
+        { title: "Data Test HIV", to: "/admin/Reservasi/Dataview" },
+        { title: "Data Refil ARV", to: "/admin" },
+        { title: "Data Viral Load", to: "/admin" },
       ],
       icon: <CalendarTodayOutlinedIcon />,
     },
     {
       title: "Notifikasi Pasangan",
       subMenu: [
-        { title: "Data View", to: "/" },
-        { title: "Data Komunitas", to: "/" },
+        { title: "Data View", to: "/admin" },
+        { title: "Data Komunitas", to: "/admin" },
       ],
       icon: <FavoriteIcon />,
     },
     {
       title: "Skrining HIV Mandiri",
-      subMenu: [{ title: "Data View", to: "/" }],
+      subMenu: [{ title: "Data View", to: "/admin" }],
       icon: <ColorizeIcon />,
     },
     {
       title: "Info Prep",
-      subMenu: [{ title: "Data View", to: "/" }],
+      subMenu: [{ title: "Data View", to: "/admin" }],
       icon: <CalendarTodayOutlinedIcon />,
     },
     {
       title: "Cascade",
       subMenu: [
-        { title: "Cascade Total", to: "/" },
-        { title: "Cascade Tes HIV", to: "/" },
-        { title: "Cascade Refil ARV", to: "/" },
-        { title: "Cascade VIral Load", to: "/" },
+        { title: "Cascade Total", to: "/admin" },
+        { title: "Cascade Tes HIV", to: "/admin" },
+        { title: "Cascade Refil ARV", to: "/admin" },
+        { title: "Cascade VIral Load", to: "/admin" },
       ],
       icon: <BarChartOutlinedIcon />,
     },
-    { title: "Users", to: "/", icon: <PersonOutlinedIcon /> },
+    { title: "Users", to: "/admin", icon: <PersonOutlinedIcon /> },
     {
       title: "Help",
-      to: "/",
+      to: "/admin",
       icon: <HelpOutlineOutlinedIcon />,
     },
     {
@@ -84,7 +84,7 @@ const Header = () => {
       subMenu: [
         {
           title: "Fasyankes",
-          to: "/Pengaturan/Fasyankes",
+          to: "/admin/Pengaturan/Fasyankes",
         },
       ],
       icon: <HandymanIcon />,
@@ -100,7 +100,7 @@ const Header = () => {
             <IconButton
               className="mobile-only"
               onClick={() => {
-                navigate("/");
+                navigate("/admin");
               }}
               disableRipple
             >
@@ -158,7 +158,7 @@ const Header = () => {
             <IconButton
               className="mobile-only"
               onClick={() => {
-                navigate("/");
+                navigate("/admin");
               }}
               sx={{ display: appear ? "block" : "none" }}
               disableRipple
