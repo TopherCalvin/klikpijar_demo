@@ -199,9 +199,11 @@ const Reservasi = () => {
           </Box>
           <Typography padding={"10px"}>
             {`Showing ${
-              (pagination.pageIndex + 1) * pagination.pageSize +
-              1 -
-              pagination.pageSize
+              total > 0
+                ? (pagination.pageIndex + 1) * pagination.pageSize +
+                  1 -
+                  pagination.pageSize
+                : 0
             } to ${
               (pagination.pageIndex + 1) * pagination.pageSize > total
                 ? total
