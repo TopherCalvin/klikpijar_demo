@@ -9,19 +9,26 @@ const routes = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: "/admin",
         element: <Dashboard />,
       },
       {
-        path: "/Reservasi",
+        path: "/admin/Reservasi",
         element: <Reservasi />,
-        children: [{ path: "/Reservasi/Dataview", element: <Reservasi /> }],
+        children: [
+          { path: "/admin/Reservasi/Dataview", element: <Reservasi /> },
+        ],
       },
       {
-        path: "/Pengaturan",
-        children: [{ path: "/Pengaturan/Fasyankes", element: <Fasyankes /> }],
+        path: "/admin/Pengaturan",
+        children: [
+          { path: "/admin/Pengaturan/Fasyankes", element: <Fasyankes /> },
+        ],
       },
     ],
+  },
+  {
+    basename: "/admin",
   },
 ]);
 
