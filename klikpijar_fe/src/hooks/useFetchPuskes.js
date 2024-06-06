@@ -5,9 +5,6 @@ const init = {
   limit: 5,
   page: 1,
   q: "",
-  regency_kode: null,
-  province_kode: null,
-  service_id: null,
 };
 
 export const useFetchPuskes = () => {

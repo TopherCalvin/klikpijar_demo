@@ -2,11 +2,15 @@ import {
   Box,
   Button,
   IconButton,
+  InputAdornment,
+  TextField,
   Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import {
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
@@ -15,190 +19,20 @@ import { Delete, Edit } from "@mui/icons-material";
 import { useMemo, useState } from "react";
 import moment from "moment/moment";
 import Filter from "../components/filter";
-import { useFetchPuskes } from "../hooks/useFetchPuskes";
-
-const Data = [
-  {
-    id: 1,
-    camCode: "Jon Snow",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    age: 35,
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    phone: "(665)121-5454",
-    email: "cerseilannister@gmail.com",
-    tanggalReservasi: "22-05-2024",
-  },
-  {
-    id: 2,
-    camCode: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-    age: 42,
-    phone: "(421)314-2288",
-  },
-  {
-    id: 3,
-    camCode: "Jaime Lannister",
-    email: "jaimelannister@gmail.com",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-    age: 45,
-    phone: "(422)982-6739",
-  },
-  {
-    id: 4,
-    camCode: "Anya Stark",
-    email: "anyastark@gmail.com",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-    age: 16,
-    phone: "(921)425-6742",
-  },
-  {
-    id: 5,
-    camCode: "Daenerys Targaryen",
-    email: "daenerystargaryen@gmail.com",
-    age: 31,
-    phone: "(421)445-1189",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-  },
-  {
-    id: 6,
-    camCode: "Ever Melisandre",
-    email: "evermelisandre@gmail.com",
-    age: 150,
-    phone: "(232)545-6483",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-  },
-  {
-    id: 7,
-    camCode: "Ferrara Clifford",
-    email: "ferraraclifford@gmail.com",
-    age: 44,
-    phone: "(543)124-0123",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-  },
-  {
-    id: 8,
-    camCode: "Rossini Frances",
-    email: "rossinifrances@gmail.com",
-    age: 36,
-    phone: "(222)444-5555",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-  },
-  {
-    id: 9,
-    camCode: "Harvey Roxie",
-    email: "harveyroxie@gmail.com",
-    age: 65,
-    phone: "(444)555-6239",
-    layanan: "Tes Hiv",
-    janjiTemu: "Sendiri",
-    kelamin: "L",
-    jadwal: "Rabu, 29-05-2024 08:45",
-    UIC: "VINC010828",
-    NIKBPJS: "3402162808010005",
-    puskesmas: "Puskesmas Kec. Kebayoran Lama",
-    hadir: "Menunggu",
-    hasilTes: "",
-    inisiasiARV: "",
-    Antrian: 1,
-    tanggalReservasi: "22-05-2024",
-  },
-];
+import { useFetchReservasi } from "../hooks/useFetchReservasi";
+import { GridSearchIcon } from "@mui/x-data-grid";
+import { ClearIcon } from "@mui/x-date-pickers";
 
 const Reservasi = () => {
-  const [mockDataReservasi, setMockDataReservasi] = useState(
-    Data.map((val, idx) => {
-      return { No: idx + 1, ...val };
-    })
-  );
-  const { puskes, fetch } = useFetchPuskes();
-  console.log(puskes);
+  const {
+    reservasi,
+    reserveFilter,
+    pagination,
+    setPagination,
+    total,
+    fetch,
+    handleReserveFilterChange,
+  } = useFetchReservasi();
   const [filter, setFilter] = useState({
     dateFrom: moment().format("yyyy-MM-DD"),
     dateTo: moment().format("yyyy-MM-DD"),
@@ -237,12 +71,21 @@ const Reservasi = () => {
         type: "numeric",
         grow: false,
         maxSize: 50,
+        muiTableBodyCellProps: {
+          sx: {
+            textAlign: "center",
+            border: "1px solid rgba(81, 81, 81, .5)",
+          },
+        },
       },
-      { accessorKey: "camCode", header: "Cam Code" },
-      { accessorKey: "layanan", header: "Layanan Yang Dipilih" },
-      { accessorKey: "janjiTemu", header: "Janji Temu Untuk" },
+      { accessorKey: "cam_code", header: "Cam Code" },
       {
-        accessorKey: "age",
+        accessorKey: "client_reserved_services",
+        header: "Layanan Yang Dipilih",
+      },
+      { accessorKey: "client_booking", header: "Janji Temu Untuk" },
+      {
+        accessorKey: "client_age",
         header: "Umur",
         type: "numeric",
         grow: false,
@@ -252,18 +95,18 @@ const Reservasi = () => {
         accessorKey: "kelamin",
         header: "Mengidentifikasi dirinya sebagai",
       },
-      { accessorKey: "jadwal", header: "Jadwal Reservasi" },
+      { accessorKey: "res_assessment_date", header: "Jadwal Reservasi" },
       { accessorKey: "UIC", header: "UIC" },
       { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
       { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
-      { accessorKey: "puskesmas", header: "Puskesmas" },
-      { accessorKey: "hadir", header: "Hadir" },
+      { accessorKey: "clinic_name", header: "Puskesmas" },
+      { accessorKey: "is_arrived", header: "Hadir" },
       { accessorKey: "hasilTes", header: "Hasil Tes" },
       { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
-      { accessorKey: "phone", header: "HP/WA" },
-      { accessorKey: "email", header: "Email" },
+      { accessorKey: "client_wa_contact", header: "HP/WA" },
+      { accessorKey: "client_email", header: "Email" },
       {
-        accessorKey: "tanggalReservasi",
+        accessorKey: "res_created_date",
         header: "Tanggal submit Reservasi",
       },
     ],
@@ -272,13 +115,9 @@ const Reservasi = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: mockDataReservasi,
+    data: reservasi,
     title: "Reservasi",
-    state: {
-      // pagination: { pageIndex: 0, pageSize: 5 },
-    },
     enableRowActions: true,
-    getRowId: (row) => row.id, //give each row a more useful id
     renderRowActions: ({ row }) => (
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Tooltip title="Edit">
@@ -309,8 +148,84 @@ const Reservasi = () => {
         </Tooltip>
       </Box>
     ),
-    options: {
-      filtering: true,
+    enableColumnFilters: false,
+    manualPagination: true,
+    rowCount: total,
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
+    renderTopToolbar: ({ table }) => {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            gap: "0.5rem",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box display={"flex"} alignItems={"center"} height={"100%"}>
+            <TextField
+              size="small"
+              variant="outlined"
+              value={reserveFilter.q}
+              name="q"
+              onChange={handleReserveFilterChange}
+              sx={{ padding: "10px" }}
+              placeholder="Search..."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <GridSearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Clear search"
+                      onClick={handleReserveFilterChange}
+                      edge="end"
+                      size="small"
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <MRT_ShowHideColumnsButton table={table} />
+            <MRT_ToggleDensePaddingButton table={table} />
+          </Box>
+          <Typography padding={"10px"}>
+            {`Showing ${
+              (pagination.pageIndex + 1) * pagination.pageSize +
+              1 -
+              pagination.pageSize
+            } to ${
+              (pagination.pageIndex + 1) * pagination.pageSize > total
+                ? total
+                : (pagination.pageIndex + 1) * pagination.pageSize
+            } of ${total} entries`}
+          </Typography>
+        </Box>
+      );
+    },
+    muiTableProps: {
+      sx: {
+        border: "1px solid rgba(81, 81, 81, .5)",
+        padding: "0 15px",
+      },
+    },
+    muiTableHeadCellProps: {
+      sx: {
+        border: "1px solid rgba(81, 81, 81, .5)",
+      },
+    },
+    muiTableBodyCellProps: {
+      sx: {
+        border: "1px solid rgba(81, 81, 81, .5)",
+      },
     },
     muiPaginationProps: {
       shape: "rounded",

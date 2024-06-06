@@ -68,14 +68,7 @@ const Fasyankes = () => {
     columns,
     data: puskes,
     title: "Dataview Fasyankes/Klinik",
-    enableColumnFilters: false,
     enableRowActions: true,
-    manualPagination: true,
-    rowCount: total,
-    state: {
-      pagination,
-    },
-    onPaginationChange: setPagination,
     renderRowActions: ({ row }) => (
       <Box
         sx={{
@@ -100,6 +93,13 @@ const Fasyankes = () => {
         </Tooltip>
       </Box>
     ),
+    enableColumnFilters: false,
+    manualPagination: true,
+    rowCount: total,
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
     renderTopToolbar: ({ table }) => {
       return (
         <Box
