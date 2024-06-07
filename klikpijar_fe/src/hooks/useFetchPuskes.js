@@ -13,8 +13,9 @@ export const useFetchPuskes = () => {
     pageIndex: puskesFilter.page - 1,
     pageSize: puskesFilter.limit,
   });
-  const [puskes, setPuskes] = useState([]);
   const [total, setTotal] = useState(0);
+  const [puskes, setPuskes] = useState([]);
+  const [puskesData, setPuskesData] = useState({});
 
   const handlePuskesFilterChange = (event) => {
     if (event.target?.name) {
@@ -27,15 +28,40 @@ export const useFetchPuskes = () => {
     }
   };
 
-  const fetch = async () => {
+  const fetchPuskes = async () => {
     try {
       const res = await api().get(`/clinics`, {
         params: puskesFilter,
       });
-      console.log(res.data);
       setPuskes(res.data.data);
       setTotal(res.data.total_record);
     } catch (err) {
+      console.log(err?.response?.data);
+    }
+  };
+
+  const fetchPuskesByID = async (puskesId) => {
+    try {
+      const res = await api().get(`/clinics/` + puskesId);
+      setPuskesData(res.data.data);
+      console.log(res.data.data);
+    } catch (err) {
+      setPuskesData(err?.response?.data);
+      console.log(err?.response?.data);
+    }
+  };
+
+  const deletePuskesByID = async (setOpenErrorModal, deleteModal) => {
+    try {
+      if (puskesData.clinic?.id) {
+        const res = await api().delete(`/clinics/` + puskesData.id);
+        fetchPuskes();
+        deleteModal();
+      } else {
+        setOpenErrorModal(true);
+      }
+    } catch (err) {
+      setOpenErrorModal(true);
       console.log(err?.response?.data);
     }
   };
@@ -49,7 +75,7 @@ export const useFetchPuskes = () => {
   }, [pagination]);
 
   useEffect(() => {
-    fetch();
+    fetchPuskes();
   }, [puskesFilter]);
 
   return {
@@ -58,7 +84,10 @@ export const useFetchPuskes = () => {
     pagination,
     setPagination,
     total,
-    fetch,
     handlePuskesFilterChange,
+    deletePuskesByID,
+    puskesData,
+    fetchPuskesByID,
+    fetchPuskes,
   };
 };

@@ -1,8 +1,9 @@
 import { useFetchPuskes } from "../hooks/useFetchPuskes";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import { ClearIcon } from "@mui/x-date-pickers";
-import { Edit } from "@mui/icons-material";
-import { useMemo } from "react";
+import { Delete, Edit } from "@mui/icons-material";
+import { useMemo, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 import {
   MRT_ToggleDensePaddingButton,
   MRT_ShowHideColumnsButton,
@@ -19,6 +20,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import DeleteModal from "../components/fasyankes/deleteModal";
 
 const Fasyankes = () => {
   const {
@@ -28,10 +30,11 @@ const Fasyankes = () => {
     setPagination,
     handlePuskesFilterChange,
     total,
-    fetch,
   } = useFetchPuskes();
   const md = useMediaQuery("(min-width: 1024px)");
   const sm = useMediaQuery("(min-width: 676px)");
+  const [openDelete, setOpenDelete] = useState(false);
+  const [puskesId, setPuskesId] = useState(false);
 
   const handleCreateReservation = () => {
     // Create new reservation logic
@@ -41,6 +44,16 @@ const Fasyankes = () => {
   const handleEditReservation = (row) => {
     // Edit selected reservation logic
     console.log("Edit selected reservation:", row);
+  };
+
+  const deleteModal = (row) => {
+    if (!openDelete) {
+      setPuskesId(row.id);
+      setOpenDelete(true);
+    } else {
+      setPuskesId(false);
+      setOpenDelete(false);
+    }
   };
 
   const columns = useMemo(
@@ -89,6 +102,19 @@ const Fasyankes = () => {
             }}
           >
             <Edit />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton
+            onClick={() => {
+              deleteModal(row.original);
+            }}
+            sx={{
+              color: "white",
+              bgcolor: "red",
+            }}
+          >
+            <Delete />
           </IconButton>
         </Tooltip>
       </Box>
@@ -222,10 +248,11 @@ const Fasyankes = () => {
                 sx={{
                   color: "white",
                   bgcolor: "#1ec8b7",
+                  textTransform: "none",
                 }}
                 variant="outlined"
               >
-                Tambah Data
+                <AddIcon sx={{ paddingRight: "5px" }} /> Tambah Data
               </Button>
             </Box>
           </Typography>
@@ -233,6 +260,11 @@ const Fasyankes = () => {
         <Box width={"100%"} maxWidth={"90%"}>
           <MaterialReactTable table={table} />
         </Box>
+        <DeleteModal
+          openDelete={openDelete}
+          deleteModal={deleteModal}
+          puskesId={puskesId}
+        />
       </Box>
     </>
   );

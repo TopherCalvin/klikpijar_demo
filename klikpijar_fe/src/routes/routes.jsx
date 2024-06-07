@@ -3,6 +3,7 @@ import Dashboard from "../pages/dashboard";
 import Fasyankes from "../pages/fasyankes";
 import Layout from "./layout";
 import Reservasi from "../pages/reservasi";
+import AddEditFasyankes from "../pages/addEditFasyankes";
 
 const routes = createBrowserRouter([
   {
@@ -23,6 +24,14 @@ const routes = createBrowserRouter([
         path: "/admin/Pengaturan",
         children: [
           { path: "/admin/Pengaturan/Fasyankes", element: <Fasyankes /> },
+          {
+            path: "edit/:id",
+            element: <AddEditFasyankes />,
+          },
+          {
+            path: "addnew",
+            element: <AddEditFasyankes />,
+          },
         ],
       },
     ],
