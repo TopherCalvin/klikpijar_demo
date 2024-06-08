@@ -15,7 +15,15 @@ export const useFetchPuskes = () => {
   });
   const [total, setTotal] = useState(0);
   const [puskes, setPuskes] = useState([]);
-  const [puskesData, setPuskesData] = useState({});
+  const [puskesData, setPuskesData] = useState({
+    address_desc: "",
+    code: "",
+    email: "",
+    name: "",
+    phone_num: "",
+    province_kode: "",
+    regency_kode: "",
+  });
 
   const handlePuskesFilterChange = (event) => {
     if (event.target?.name) {
@@ -42,11 +50,31 @@ export const useFetchPuskes = () => {
 
   const fetchPuskesByID = async (puskesId) => {
     try {
-      const res = await api().get(`/clinics/` + puskesId);
-      setPuskesData(res.data.data);
-      console.log(res.data.data);
+      if (puskesId) {
+        const res = await api().get(`/clinics/` + puskesId);
+        console.log(res.data.data);
+        setPuskesData(res.data.data);
+      } else {
+        setPuskesData({
+          address_desc: "",
+          code: "",
+          email: "",
+          name: "",
+          phone_num: "",
+          province_kode: "",
+          regency_kode: "",
+        });
+      }
     } catch (err) {
-      setPuskesData(err?.response?.data);
+      console.log(err?.response?.data);
+    }
+  };
+
+  const createPuskes = async (body) => {
+    try {
+      const res = await api().post(`/clinics`, body);
+      fetchPuskes();
+    } catch (err) {
       console.log(err?.response?.data);
     }
   };
@@ -85,6 +113,7 @@ export const useFetchPuskes = () => {
     setPagination,
     total,
     handlePuskesFilterChange,
+    createPuskes,
     deletePuskesByID,
     puskesData,
     fetchPuskesByID,

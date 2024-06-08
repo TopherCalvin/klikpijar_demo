@@ -25,11 +25,11 @@ const routes = createBrowserRouter([
         children: [
           { path: "/admin/Pengaturan/Fasyankes", element: <Fasyankes /> },
           {
-            path: "edit/:id",
+            path: "/admin/Pengaturan/Fasyankes/edit/:id",
             element: <AddEditFasyankes />,
           },
           {
-            path: "addnew",
+            path: "/admin/Pengaturan/Fasyankes/addnew",
             element: <AddEditFasyankes />,
           },
         ],

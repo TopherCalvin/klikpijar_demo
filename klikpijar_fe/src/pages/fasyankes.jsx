@@ -21,30 +21,23 @@ import {
   Box,
 } from "@mui/material";
 import DeleteModal from "../components/fasyankes/deleteModal";
+import { useNavigate } from "react-router-dom";
 
 const Fasyankes = () => {
   const {
+    total,
     puskes,
     puskesFilter,
     pagination,
     setPagination,
     handlePuskesFilterChange,
-    total,
+    fetchPuskesByID,
   } = useFetchPuskes();
   const md = useMediaQuery("(min-width: 1024px)");
   const sm = useMediaQuery("(min-width: 676px)");
   const [openDelete, setOpenDelete] = useState(false);
   const [puskesId, setPuskesId] = useState(false);
-
-  const handleCreateReservation = () => {
-    // Create new reservation logic
-    console.log("Create new reservation");
-  };
-
-  const handleEditReservation = (row) => {
-    // Edit selected reservation logic
-    console.log("Edit selected reservation:", row);
-  };
+  const navigate = useNavigate();
 
   const deleteModal = (row) => {
     if (!openDelete) {
@@ -94,7 +87,7 @@ const Fasyankes = () => {
         <Tooltip title="Edit">
           <IconButton
             onClick={() => {
-              handleEditReservation(row.original);
+              navigate(`/admin/Pengaturan/Fasyankes/edit/${row.original.id}`);
             }}
             sx={{
               color: "white",
@@ -244,7 +237,9 @@ const Fasyankes = () => {
             <Box paddingLeft={"10px"}>Dataview Fasyankes/Klinik</Box>
             <Box sx={{ paddingRight: "10px" }}>
               <Button
-                onClick={handleCreateReservation}
+                onClick={() => {
+                  navigate("/admin/Pengaturan/Fasyankes/addnew");
+                }}
                 sx={{
                   color: "white",
                   bgcolor: "#1ec8b7",
