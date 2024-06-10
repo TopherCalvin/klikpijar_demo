@@ -3,9 +3,11 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { Box, Typography, Button, useMediaQuery } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const DataMasuk = () => {
   const sm = useMediaQuery("(min-width: 450px)");
+  const theme = useTheme();
   const data = [];
   return (
     <Box
@@ -32,12 +34,12 @@ const DataMasuk = () => {
             width: "100%",
             height: "50px",
             display: "flex",
-            bgcolor: "#4c7c9e",
             borderRadius: "3px 3px 0 0",
             color: "white",
             display: "flex",
             alignItems: "center",
           }}
+          bgcolor={theme.palette.primary.main}
         >
           <Box paddingLeft={"10px"}>Data masuk</Box>
         </Typography>
@@ -45,7 +47,7 @@ const DataMasuk = () => {
           width={"100%"}
           display={"flex"}
           flexDirection={sm ? "row" : "column"}
-          alignItems={"center"}
+          alignItems={sm ? "baseline" : "center"}
           bgcolor={"#ffffff"}
         >
           <Box
@@ -56,7 +58,11 @@ const DataMasuk = () => {
           >
             <Button
               width={"100%"}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "black",
+              }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
                 <Box
@@ -64,12 +70,12 @@ const DataMasuk = () => {
                     width: "50px",
                     height: "50px",
                     borderRadius: "50%",
-                    color: "#1dc9b7",
-                    bgcolor: "#d6e1e9",
+                    bgcolor: "#fff2d9",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
+                  color={theme.palette.primary.main}
                 >
                   <EditCalendarIcon
                     sx={{
@@ -91,7 +97,7 @@ const DataMasuk = () => {
                     textTransform={"capitalize"}
                     gutterBottom
                   >
-                    Reservasi
+                    Reservasi Tes HIV
                   </Typography>
                   <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
                     3611 reservasi
@@ -104,7 +110,11 @@ const DataMasuk = () => {
             </Button>
             <Button
               width={"100%"}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "black",
+              }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
                 <Box
@@ -112,12 +122,12 @@ const DataMasuk = () => {
                     width: "50px",
                     height: "50px",
                     borderRadius: "50%",
-                    color: "#fd397a",
-                    bgcolor: "#d6e1e9",
+                    bgcolor: "#fff2d9",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
+                  color={theme.palette.primary.main}
                 >
                   <FileCopyIcon
                     sx={{
@@ -139,7 +149,59 @@ const DataMasuk = () => {
                     textTransform={"capitalize"}
                     gutterBottom
                   >
-                    Akupeduli
+                    Reservasi Refill ARV
+                  </Typography>
+                  <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
+                    27 klien
+                  </Typography>
+                  <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
+                    31 pasangan/anak
+                  </Typography>
+                </Box>
+              </Box>
+            </Button>
+            <Button
+              width={"100%"}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "black",
+              }}
+            >
+              <Box display={"flex"} width={"100%"} alignItems={"center"}>
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    bgcolor: "#fff2d9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  color={theme.palette.primary.main}
+                >
+                  <FileCopyIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
+                </Box>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  width={"100%"}
+                  paddingLeft={"15px"}
+                  fontWeight={"700"}
+                  textTransform={"lowercase"}
+                >
+                  <Typography
+                    textAlign={"left"}
+                    textTransform={"capitalize"}
+                    gutterBottom
+                  >
+                    Notifikasi Pasangan
                   </Typography>
                   <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
                     27 klien
@@ -159,7 +221,11 @@ const DataMasuk = () => {
           >
             <Button
               width={"100%"}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "black",
+              }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
                 <Box
@@ -167,12 +233,12 @@ const DataMasuk = () => {
                     width: "50px",
                     height: "50px",
                     borderRadius: "50%",
-                    color: "#fd397a",
-                    bgcolor: "#d6e1e9",
+                    bgcolor: "#fff2d9",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
+                  color={theme.palette.primary.main}
                 >
                   <FileCopyIcon
                     sx={{
@@ -194,7 +260,7 @@ const DataMasuk = () => {
                     textTransform={"capitalize"}
                     gutterBottom
                   >
-                    Skrining mandiri
+                    Reservasi SHBK/CBS
                   </Typography>
                   <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
                     11 pemohon
@@ -207,7 +273,11 @@ const DataMasuk = () => {
             </Button>
             <Button
               width={"100%"}
-              sx={{ display: "flex", justifyContent: "flex-start" }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "black",
+              }}
             >
               <Box display={"flex"} width={"100%"} alignItems={"center"}>
                 <Box
@@ -215,12 +285,12 @@ const DataMasuk = () => {
                     width: "50px",
                     height: "50px",
                     borderRadius: "50%",
-                    color: "#ffb822",
-                    bgcolor: "#d6e1e9",
+                    bgcolor: "#fff2d9",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
+                  color={theme.palette.primary.main}
                 >
                   <CalendarTodayOutlinedIcon
                     sx={{
@@ -242,7 +312,7 @@ const DataMasuk = () => {
                     textTransform={"capitalize"}
                     gutterBottom
                   >
-                    Info Prep
+                    Reservasi Prep
                   </Typography>
                   <Typography textAlign={"left"} fontSize={"13px"} gutterBottom>
                     0 via CSO

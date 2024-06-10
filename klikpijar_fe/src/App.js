@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import { ThemeProvider } from "@mui/material";
-import customTheme from "./components/customTheme";
+import customTheme from "./components/css/customTheme";
 
 function App() {
   return (

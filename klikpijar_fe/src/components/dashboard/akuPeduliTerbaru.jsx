@@ -7,9 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const AkuPeduliTerbaru = () => {
   const sm = useMediaQuery("(min-width: 450px)");
+  const theme = useTheme();
   const data = [];
   return (
     <Box
@@ -36,12 +38,12 @@ const AkuPeduliTerbaru = () => {
             width: "100%",
             height: "50px",
             display: "flex",
-            bgcolor: "#4c7c9e",
             borderRadius: "3px 3px 0 0",
             color: "white",
             display: "flex",
             alignItems: "center",
           }}
+          bgcolor={theme.palette.primary.main}
         >
           <Box paddingLeft={"10px"}>Akupeduli Terbaru</Box>
         </Typography>

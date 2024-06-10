@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -22,6 +22,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./css/header.css";
 import SideMenu from "./sideMenu";
+import logoBeraniBersama from "../assets/beranibersamalogo.jpeg";
+import { useTheme } from "@emotion/react";
 
 const Header = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -29,6 +31,7 @@ const Header = () => {
   const [user, setUser] = useState(false);
   const currentPath = useLocation();
   const navigate = useNavigate();
+  const theme = useTheme();
   const md = useMediaQuery("(min-width: 1024px)");
   const page = [
     {
@@ -51,7 +54,7 @@ const Header = () => {
         { title: "Data View", to: "/admin" },
         { title: "Data Komunitas", to: "/admin" },
       ],
-      icon: <FavoriteIcon />,
+      icon: <FavoriteBorderIcon />,
     },
     {
       title: "Skrining HIV Mandiri",
@@ -108,11 +111,11 @@ const Header = () => {
                 className="logo-transition"
                 height={"40px"}
                 alt="Klikpijar"
-                src={"https://klikpijar.id/public/assets/img/co.png"}
+                src={logoBeraniBersama}
               />
             </IconButton>
 
-            <Box sx={{ color: "#4e4c5f" }}>
+            <Box>
               <Button
                 variant="text"
                 disableRipple
@@ -165,9 +168,9 @@ const Header = () => {
             >
               <img
                 className="logo-transition"
-                height={"50px"}
+                height={"60px"}
                 alt="Klikpijar"
-                src={"https://klikpijar.id/public/assets/img/co.png"}
+                src={logoBeraniBersama}
               />
             </IconButton>
             <IconButton
@@ -189,7 +192,7 @@ const Header = () => {
               height: "100%",
             }}
           >
-            <Typography>Hi, Epic Team</Typography>
+            <Typography>Hi, ROOT</Typography>
             <AccountCircleIcon fontSize="large" />
           </Box>
 
@@ -217,8 +220,9 @@ const Header = () => {
                 width: "20%",
                 height: "100%",
               }}
+              color={theme.palette.primary.main}
             >
-              <Typography>Hi, Epic Team</Typography>
+              <Typography>Hi, ROOT</Typography>
               <AccountCircleIcon fontSize="large" />
             </Box>
           </Box>
@@ -231,7 +235,7 @@ const Header = () => {
           sx={{
             display: appear ? "block" : "none",
             height: "100vh",
-            bgcolor: "#282733",
+            bgcolor: "white",
           }}
           onMouseEnter={() => {
             md && setAppear(true);
@@ -240,7 +244,9 @@ const Header = () => {
             md && setAppear(false);
           }}
         >
-          <SideMenu page={page} isCollapsed={isCollapsed} />
+          <Box sx={{ height: "90vh", overflow: "auto" }}>
+            <SideMenu page={page} isCollapsed={isCollapsed} />
+          </Box>
         </Box>
       </AppBar>
 
@@ -249,12 +255,12 @@ const Header = () => {
         sx={{
           width: "100%",
           height: "43px",
-          bgcolor: "#1ec8b7",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           paddingTop: md ? "65px" : "0",
         }}
+        bgcolor={theme.palette.secondary.main}
       >
         <Typography
           maxWidth={"1024px"}

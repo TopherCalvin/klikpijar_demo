@@ -12,7 +12,8 @@
   align-items: center;
   width: 100%;
   max-width: 1024px;
-  background: #201f2b;
+  padding-left: 15px;
+  background: white;
 }
 
 @media screen and (min-width: 1024px) {
@@ -24,8 +25,8 @@
     height: 65px;
     justify-content: space-between;
     position: absolute;
-    color: white;
-    background-color: #201f2b;
+    color: #ce2039;
+    background-color: white;
     z-index: 2;
   }
 }

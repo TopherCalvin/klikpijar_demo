@@ -7,9 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const ReservasiTerbaru = () => {
   const sm = useMediaQuery("(min-width: 450px)");
+  const theme = useTheme();
   const data = [
     { tanggal: "Kolom data tidak ditemukan", camCode: "3171795" },
     { tanggal: "Kolom data tidak ditemukan", camCode: "3171795" },
@@ -43,12 +45,12 @@ const ReservasiTerbaru = () => {
             width: "100%",
             height: "50px",
             display: "flex",
-            bgcolor: "#4c7c9e",
             borderRadius: "3px 3px 0 0",
             color: "white",
             display: "flex",
             alignItems: "center",
           }}
+          bgcolor={theme.palette.primary.main}
         >
           <Box paddingLeft={"10px"}>Reservasi Terbaru</Box>
         </Typography>

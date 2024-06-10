@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Typography, colors } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 function Item({ title, to, icon, selected, setSelected, subMenu, navigate }) {
   return !subMenu ? (
@@ -36,6 +37,7 @@ function Item({ title, to, icon, selected, setSelected, subMenu, navigate }) {
 const SideMenu = ({ page, isCollapsed }) => {
   const [selected, setSelected] = useState("Dashboard");
   const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <Sidebar collapsed={isCollapsed}>
@@ -44,20 +46,20 @@ const SideMenu = ({ page, isCollapsed }) => {
           button: ({ level, active }) => {
             if (level === 0) {
               return {
-                color: active ? "white" : "#7c87a6",
-                backgroundColor: active ? "#db1430" : "#282733",
+                color: active ? "white" : theme.palette.primary.main,
+                backgroundColor: active ? "#db1430" : "white",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#2f2e3c",
+                  backgroundColor: theme.palette.primary.main,
                 },
               };
             } else if (level === 1) {
               return {
-                color: active ? "white" : "#7c87a6",
-                backgroundColor: "#282733",
+                color: active ? "white" : theme.palette.primary.main,
+                backgroundColor: active ? "#db1430" : "white",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#2f2e3c",
+                  backgroundColor: theme.palette.primary.main,
                 },
               };
             }

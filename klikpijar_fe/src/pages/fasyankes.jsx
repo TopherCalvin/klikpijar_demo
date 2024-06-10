@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import DeleteModal from "../components/fasyankes/deleteModal";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 const Fasyankes = () => {
   const {
@@ -35,6 +36,7 @@ const Fasyankes = () => {
   } = useFetchPuskes();
   const md = useMediaQuery("(min-width: 1024px)");
   const sm = useMediaQuery("(min-width: 676px)");
+  const theme = useTheme();
   const [openDelete, setOpenDelete] = useState(false);
   const [puskesId, setPuskesId] = useState(false);
   const navigate = useNavigate();
@@ -66,6 +68,49 @@ const Fasyankes = () => {
         maxSize: 50,
       },
       { accessorKey: "email", header: "Email" },
+      {
+        id: "actions",
+        header: "Actions",
+        Cell: ({ row }) => (
+          <Box
+            sx={{
+              display: "flex",
+              gap: "1rem",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => {
+                  navigate(
+                    `/admin/Pengaturan/Fasyankes/edit/${row.original.id}`
+                  );
+                }}
+                sx={{
+                  color: "white",
+                  bgcolor: theme.palette.secondary.main,
+                }}
+              >
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                onClick={() => {
+                  deleteModal(row.original);
+                }}
+                sx={{
+                  color: "white",
+                  bgcolor: "red",
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ),
+      },
     ],
     []
   );
@@ -74,50 +119,44 @@ const Fasyankes = () => {
     columns,
     data: puskes,
     title: "Dataview Fasyankes/Klinik",
-    enableRowActions: true,
-    renderRowActions: ({ row }) => (
-      <Box
-        sx={{
-          display: "flex",
-          gap: "1rem",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Tooltip title="Edit">
-          <IconButton
-            onClick={() => {
-              navigate(`/admin/Pengaturan/Fasyankes/edit/${row.original.id}`);
-            }}
-            sx={{
-              color: "white",
-              bgcolor: "#1ec8b7",
-            }}
-          >
-            <Edit />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton
-            onClick={() => {
-              deleteModal(row.original);
-            }}
-            sx={{
-              color: "white",
-              bgcolor: "red",
-            }}
-          >
-            <Delete />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ),
     enableColumnFilters: false,
     manualPagination: true,
     rowCount: total,
     state: {
       pagination,
     },
+    enableExpandAll: false,
+    muiDetailPanelProps: () => ({
+      sx: (theme) => ({
+        backgroundColor:
+          theme.palette.mode === "dark"
+            ? "rgba(255,210,244,0.1)"
+            : "rgba(0,0,0,0.1)",
+      }),
+    }),
+    muiExpandButtonProps: ({ row, table }) => ({
+      onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //only 1 detail panel open at a time
+      sx: {
+        transform: row.getIsExpanded() ? "rotate(180deg)" : "rotate(-90deg)",
+        transition: "transform 0.2s",
+      },
+    }),
+    renderDetailPanel: ({ row }) =>
+      sm ? (
+        <Box
+          sx={{
+            display: "grid",
+            margin: "auto",
+            gridTemplateColumns: "1fr",
+            width: "100%",
+          }}
+        >
+          <Typography>Address: {row.original?.address}</Typography>
+          <Typography>City: {row.original?.city}</Typography>
+          <Typography>State: {row.original?.state}</Typography>
+          <Typography>Country: {row.original?.country}</Typography>
+        </Box>
+      ) : null,
     onPaginationChange: setPagination,
     renderTopToolbar: ({ table }) => {
       return (
@@ -163,9 +202,11 @@ const Fasyankes = () => {
           </Box>
           <Typography padding={"10px"}>
             {`Showing ${
-              (pagination.pageIndex + 1) * pagination.pageSize +
-              1 -
-              pagination.pageSize
+              total > 0
+                ? (pagination.pageIndex + 1) * pagination.pageSize +
+                  1 -
+                  pagination.pageSize
+                : 0
             } to ${
               (pagination.pageIndex + 1) * pagination.pageSize > total
                 ? total
