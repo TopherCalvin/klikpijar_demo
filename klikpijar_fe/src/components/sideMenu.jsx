@@ -47,19 +47,19 @@ const SideMenu = ({ page, isCollapsed }) => {
             if (level === 0) {
               return {
                 color: active ? "white" : theme.palette.primary.main,
-                backgroundColor: active ? "#db1430" : "white",
+                backgroundColor: active ? "#db1430" : "#2A363B",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: theme.palette.primary.main,
+                  backgroundColor: theme.palette.secondary.main,
                 },
               };
             } else if (level === 1) {
               return {
                 color: active ? "white" : theme.palette.primary.main,
-                backgroundColor: active ? "#db1430" : "white",
+                backgroundColor: active ? "#db1430" : "#2A363B",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: theme.palette.primary.main,
+                  backgroundColor: theme.palette.secondary.main,
                 },
               };
             }

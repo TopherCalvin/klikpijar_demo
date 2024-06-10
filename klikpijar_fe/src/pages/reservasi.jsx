@@ -15,13 +15,15 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import TableViewIcon from "@mui/icons-material/TableView";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import { useMemo, useState } from "react";
 import moment from "moment/moment";
 import Filter from "../components/filter";
 import { useFetchReservasi } from "../hooks/useFetchReservasi";
 import { GridSearchIcon } from "@mui/x-data-grid";
 import { ClearIcon } from "@mui/x-date-pickers";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 const Reservasi = () => {
   const {
@@ -33,12 +35,19 @@ const Reservasi = () => {
     fetch,
     handleReserveFilterChange,
   } = useFetchReservasi();
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const xxl = useMediaQuery(theme.breakpoints.up("xxl"));
+  const xl = useMediaQuery(theme.breakpoints.up("xl"));
+  const lg = useMediaQuery(theme.breakpoints.up("lg"));
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+  const sm = useMediaQuery(theme.breakpoints.up("sm"));
+  const smLimit = useMediaQuery("(min-width: 676px)");
+  const [columnVisibility, setColumnVisibility] = useState({});
   const [filter, setFilter] = useState({
     dateFrom: moment().format("yyyy-MM-DD"),
     dateTo: moment().format("yyyy-MM-DD"),
   });
-  const md = useMediaQuery("(min-width: 1024px)");
-  const sm = useMediaQuery("(min-width: 676px)");
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
@@ -51,11 +60,6 @@ const Reservasi = () => {
   const handleCreateReservation = () => {
     // Create new reservation logic
     console.log("Create new reservation");
-  };
-
-  const handleEditReservation = (row) => {
-    // Edit selected reservation logic
-    console.log("Edit selected reservation:", row);
   };
 
   const handleDeleteReservation = (row) => {
@@ -92,22 +96,51 @@ const Reservasi = () => {
         maxSize: 50,
       },
       {
-        accessorKey: "kelamin",
+        accessorKey: "gender_name",
         header: "Mengidentifikasi dirinya sebagai",
       },
-      { accessorKey: "res_assessment_date", header: "Jadwal Reservasi" },
-      { accessorKey: "UIC", header: "UIC" },
-      { accessorKey: "NIKBPJS", header: "NIK/BPJS" },
-      { accessorKey: "Antrian", header: "No. Antri", type: "numeric" },
+      { accessorKey: "res_date", header: "Jadwal Reservasi" },
+      { accessorKey: "uic", header: "UIC" },
+      { accessorKey: "identity_number", header: "NIK/BPJS" },
+      { accessorKey: "booking_code", header: "No. Antri", type: "numeric" },
       { accessorKey: "clinic_name", header: "Puskesmas" },
       { accessorKey: "is_arrived", header: "Hadir" },
-      { accessorKey: "hasilTes", header: "Hasil Tes" },
-      { accessorKey: "inisiasiARV", header: "Inisiasi ARV" },
+      { accessorKey: "hasil", header: "Hasil Tes" },
+      { accessorKey: "arv", header: "Inisiasi ARV" },
       { accessorKey: "client_wa_contact", header: "HP/WA" },
       { accessorKey: "client_email", header: "Email" },
       {
         accessorKey: "res_created_date",
         header: "Tanggal submit Reservasi",
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        maxSize: "50",
+        Cell: ({ row }) => (
+          <Box
+            sx={{
+              display: "flex",
+              gap: "1rem",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Tooltip title="Delete">
+              <IconButton
+                onClick={() => {
+                  console.log(row.original);
+                }}
+                sx={{
+                  color: "#F8F6F6",
+                  bgcolor: theme.palette.secondary.main,
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ),
       },
     ],
     []
@@ -117,44 +150,83 @@ const Reservasi = () => {
     columns,
     data: reservasi,
     title: "Reservasi",
-    enableRowActions: true,
-    renderRowActions: ({ row }) => (
-      <Box sx={{ display: "flex", gap: "1rem" }}>
-        <Tooltip title="Edit">
-          <IconButton
-            onClick={() => {
-              handleEditReservation(row.original);
-            }}
-            sx={{
-              color: "white",
-              bgcolor: "#1ec8b7",
-            }}
-          >
-            <Edit />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton
-            onClick={() => {
-              handleDeleteReservation(row.original);
-            }}
-            sx={{
-              color: "white",
-              bgcolor: "red",
-            }}
-          >
-            <Delete />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ),
+    onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
     enableColumnFilters: false,
     manualPagination: true,
+    enableExpandAll: false,
     rowCount: total,
     state: {
       pagination,
+      columnVisibility,
     },
-    onPaginationChange: setPagination,
+    muiDetailPanelProps: () => ({
+      sx: (theme) => ({
+        backgroundColor:
+          theme.palette.mode === "dark"
+            ? "rgba(255,210,244,0.1)"
+            : "rgba(0,0,0,0.1)",
+      }),
+    }),
+    muiExpandButtonProps: ({ row, table }) => ({
+      onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //only 1 detail panel open at a time
+      sx: {
+        transform: row.getIsExpanded() ? "rotate(180deg)" : "rotate(-90deg)",
+        transition: "transform 0.2s",
+      },
+    }),
+    renderDetailPanel: ({ row }) => (
+      <Box
+        sx={{
+          display: "grid",
+          margin: "auto",
+          gridTemplateColumns: "1fr",
+          width: "100%",
+        }}
+      >
+        <Box width={"100%"}>
+          {columnVisibility.name ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Nama Fasyankes:</Box> {row.original?.name}
+            </Typography>
+          )}
+          {columnVisibility.address_desc ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Alamat:</Box> {row.original?.address_desc}
+            </Typography>
+          )}
+          {columnVisibility.phone_num ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>{`Telepon | WhatsApp (WA):`}</Box>
+              <Box width={"50%"}>{row.original?.phone_num}</Box>
+            </Typography>
+          )}
+          {columnVisibility.email ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Email:</Box> {row.original?.email}
+            </Typography>
+          )}
+          {columnVisibility.actions ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Action:</Box>
+              <Tooltip title="Delete">
+                <IconButton
+                  onClick={() => {
+                    console.log(row.original);
+                  }}
+                  sx={{
+                    color: "white",
+                    bgcolor: "red",
+                  }}
+                >
+                  <Delete />
+                </IconButton>
+              </Tooltip>
+            </Typography>
+          )}
+        </Box>
+      </Box>
+    ),
     renderTopToolbar: ({ table }) => {
       return (
         <Box
@@ -301,8 +373,8 @@ const Reservasi = () => {
             sx={{
               minHeight: "50px",
               display: "flex",
-              flexDirection: sm ? "row" : "column",
-              alignItems: sm ? "center" : "flex-start",
+              flexDirection: smLimit ? "row" : "column",
+              alignItems: smLimit ? "center" : "flex-start",
               padding: "0 15px",
               gap: "8px",
               borderBottom: "1px solid rgba(0, 0, 0, 0.1)",

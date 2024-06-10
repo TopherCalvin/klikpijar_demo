@@ -34,8 +34,8 @@ const DataMasuk = () => {
             width: "100%",
             height: "50px",
             display: "flex",
-            borderRadius: "3px 3px 0 0",
-            color: "white",
+            borderRadius: "6px 6px 0 0",
+            color: "#2A363B",
             display: "flex",
             alignItems: "center",
           }}
@@ -49,6 +49,7 @@ const DataMasuk = () => {
           flexDirection={sm ? "row" : "column"}
           alignItems={sm ? "baseline" : "center"}
           bgcolor={"#ffffff"}
+          borderRadius="0 0 6px 6px"
         >
           <Box
             display={"flex"}
@@ -75,7 +76,7 @@ const DataMasuk = () => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  color={theme.palette.primary.main}
+                  color={theme.palette.secondary.main}
                 >
                   <EditCalendarIcon
                     sx={{
@@ -127,7 +128,7 @@ const DataMasuk = () => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  color={theme.palette.primary.main}
+                  color={theme.palette.secondary.main}
                 >
                   <FileCopyIcon
                     sx={{
@@ -179,7 +180,7 @@ const DataMasuk = () => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  color={theme.palette.primary.main}
+                  color={theme.palette.secondary.main}
                 >
                   <FileCopyIcon
                     sx={{
@@ -238,7 +239,7 @@ const DataMasuk = () => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  color={theme.palette.primary.main}
+                  color={theme.palette.secondary.main}
                 >
                   <FileCopyIcon
                     sx={{
@@ -290,7 +291,7 @@ const DataMasuk = () => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  color={theme.palette.primary.main}
+                  color={theme.palette.secondary.main}
                 >
                   <CalendarTodayOutlinedIcon
                     sx={{

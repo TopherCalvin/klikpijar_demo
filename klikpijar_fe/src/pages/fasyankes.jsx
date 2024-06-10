@@ -34,12 +34,22 @@ const Fasyankes = () => {
     handlePuskesFilterChange,
     fetchPuskesByID,
   } = useFetchPuskes();
-  const md = useMediaQuery("(min-width: 1024px)");
-  const sm = useMediaQuery("(min-width: 676px)");
+  const navigate = useNavigate();
   const theme = useTheme();
+  const xxl = useMediaQuery(theme.breakpoints.up("xxl"));
+  const xl = useMediaQuery(theme.breakpoints.up("xl"));
+  const lg = useMediaQuery(theme.breakpoints.up("lg"));
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+  const sm = useMediaQuery(theme.breakpoints.up("sm"));
   const [openDelete, setOpenDelete] = useState(false);
   const [puskesId, setPuskesId] = useState(false);
-  const navigate = useNavigate();
+  const [columnVisibility, setColumnVisibility] = useState({
+    actions: xxl,
+    email: xl,
+    phone_num: lg,
+    address_desc: md,
+    name: sm,
+  });
 
   const deleteModal = (row) => {
     if (!openDelete) {
@@ -88,8 +98,8 @@ const Fasyankes = () => {
                   );
                 }}
                 sx={{
-                  color: "white",
-                  bgcolor: theme.palette.secondary.main,
+                  color: "#2A363B",
+                  bgcolor: theme.palette.primary.main,
                 }}
               >
                 <Edit />
@@ -101,8 +111,8 @@ const Fasyankes = () => {
                   deleteModal(row.original);
                 }}
                 sx={{
-                  color: "white",
-                  bgcolor: "red",
+                  color: "#F8F6F6",
+                  bgcolor: theme.palette.secondary.main,
                 }}
               >
                 <Delete />
@@ -124,7 +134,10 @@ const Fasyankes = () => {
     rowCount: total,
     state: {
       pagination,
+      columnVisibility,
     },
+    onPaginationChange: setPagination,
+    onColumnVisibilityChange: setColumnVisibility,
     enableExpandAll: false,
     muiDetailPanelProps: () => ({
       sx: (theme) => ({
@@ -142,7 +155,7 @@ const Fasyankes = () => {
       },
     }),
     renderDetailPanel: ({ row }) =>
-      sm ? (
+      !xxl ? (
         <Box
           sx={{
             display: "grid",
@@ -151,13 +164,66 @@ const Fasyankes = () => {
             width: "100%",
           }}
         >
-          <Typography>Address: {row.original?.address}</Typography>
-          <Typography>City: {row.original?.city}</Typography>
-          <Typography>State: {row.original?.state}</Typography>
-          <Typography>Country: {row.original?.country}</Typography>
+          <Box width={"100%"}>
+            {columnVisibility.name ? null : (
+              <Typography>
+                <Box fontWeight={"600"}>Nama Fasyankes:</Box>{" "}
+                {row.original?.name}
+              </Typography>
+            )}
+            {columnVisibility.address_desc ? null : (
+              <Typography>
+                <Box fontWeight={"600"}>Alamat:</Box>{" "}
+                {row.original?.address_desc}
+              </Typography>
+            )}
+            {columnVisibility.phone_num ? null : (
+              <Typography>
+                <Box fontWeight={"600"}>{`Telepon | WhatsApp (WA):`}</Box>
+                <Box width={"50%"}>{row.original?.phone_num}</Box>
+              </Typography>
+            )}
+            {columnVisibility.email ? null : (
+              <Typography>
+                <Box fontWeight={"600"}>Email:</Box> {row.original?.email}
+              </Typography>
+            )}
+            {columnVisibility.actions ? null : (
+              <Typography>
+                <Box fontWeight={"600"}>Action:</Box>
+                <Tooltip title="Edit">
+                  <IconButton
+                    onClick={() => {
+                      navigate(
+                        `/admin/Pengaturan/Fasyankes/edit/${row.original.id}`
+                      );
+                    }}
+                    sx={{
+                      color: "#2A363B",
+                      bgcolor: theme.palette.primary.main,
+                    }}
+                  >
+                    <Edit />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete">
+                  <IconButton
+                    onClick={() => {
+                      deleteModal(row.original);
+                    }}
+                    sx={{
+                      color: "#F8F6F6",
+                      bgcolor: "red",
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
+              </Typography>
+            )}
+          </Box>
         </Box>
       ) : null,
-    onPaginationChange: setPagination,
     renderTopToolbar: ({ table }) => {
       return (
         <Box
@@ -267,13 +333,14 @@ const Fasyankes = () => {
               width: "100%",
               height: "50px",
               display: "flex",
-              bgcolor: "#4c7c9e",
-              borderRadius: "3px 3px 0 0",
-              color: "white",
+              borderRadius: "6px 6px 0 0",
+              color: "#2A363B",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              padding: "6px 0",
             }}
+            bgcolor={theme.palette.primary.main}
           >
             <Box paddingLeft={"10px"}>Dataview Fasyankes/Klinik</Box>
             <Box sx={{ paddingRight: "10px" }}>
@@ -282,9 +349,11 @@ const Fasyankes = () => {
                   navigate("/admin/Pengaturan/Fasyankes/addnew");
                 }}
                 sx={{
-                  color: "white",
-                  bgcolor: "#1ec8b7",
+                  color: "#2A363B",
                   textTransform: "none",
+                  boxShadow:
+                    "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
+                  width: "150px",
                 }}
                 variant="outlined"
               >

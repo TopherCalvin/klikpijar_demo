@@ -38,7 +38,7 @@ const SkriningHIVTerbaru = () => {
             width: "100%",
             height: "50px",
             display: "flex",
-            borderRadius: "3px 3px 0 0",
+            borderRadius: "6px 6px 0 0",
             color: "white",
             display: "flex",
             alignItems: "center",

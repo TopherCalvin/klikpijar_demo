@@ -22,7 +22,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./css/header.css";
 import SideMenu from "./sideMenu";
-import logoBeraniBersama from "../assets/beranibersamalogo.jpeg";
+import logoBeraniBersama from "../assets/beranibersamalogo.png";
 import { useTheme } from "@emotion/react";
 
 const Header = () => {
@@ -101,7 +101,6 @@ const Header = () => {
           {/* HEADER MOBILE */}
           <Box className="header-mobile">
             <IconButton
-              className="mobile-only"
               onClick={() => {
                 navigate("/admin");
               }}
@@ -114,7 +113,6 @@ const Header = () => {
                 src={logoBeraniBersama}
               />
             </IconButton>
-
             <Box>
               <Button
                 variant="text"
@@ -125,6 +123,7 @@ const Header = () => {
                 }}
                 sx={{
                   transform: isCollapsed ? "rotate(90deg)" : "rotate(270deg)",
+                  color: "#F8F6F6",
                 }}
               >
                 <LeaderboardIcon />
@@ -135,6 +134,7 @@ const Header = () => {
                 }}
                 variant="text"
                 disableRipple
+                sx={{ color: "#F8F6F6" }}
               >
                 <MoreVertIcon />
               </Button>
@@ -159,11 +159,9 @@ const Header = () => {
             }}
           >
             <IconButton
-              className="mobile-only"
               onClick={() => {
                 navigate("/admin");
               }}
-              sx={{ display: appear ? "block" : "none" }}
               disableRipple
             >
               <img
@@ -174,7 +172,7 @@ const Header = () => {
               />
             </IconButton>
             <IconButton
-              color="inherit"
+              sx={{ color: "#F8F6F6" }}
               onClick={() => {
                 setIsCollapsed(!isCollapsed);
               }}
@@ -205,7 +203,7 @@ const Header = () => {
               justifyContent: "flex-end",
               width: "100%",
               height: "100%",
-              bgcolor: "white",
+              bgcolor: "#2A363B",
               zIndex: "-20",
               transform: user && !md ? "translateY(100%)" : "translateY(0%)",
               opacity: user && !md ? "1" : "0",
@@ -220,7 +218,7 @@ const Header = () => {
                 width: "20%",
                 height: "100%",
               }}
-              color={theme.palette.primary.main}
+              color={"#F8F6F6"}
             >
               <Typography>Hi, ROOT</Typography>
               <AccountCircleIcon fontSize="large" />
@@ -235,7 +233,7 @@ const Header = () => {
           sx={{
             display: appear ? "block" : "none",
             height: "100vh",
-            bgcolor: "white",
+            bgcolor: "#2A363B",
           }}
           onMouseEnter={() => {
             md && setAppear(true);
