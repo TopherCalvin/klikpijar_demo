@@ -14,12 +14,14 @@ import * as Yup from "yup";
 import { useFetchPuskes } from "../hooks/useFetchPuskes";
 import { useFetchProvince } from "../hooks/useFetchProvince";
 import { useFetchKabupaten } from "../hooks/useFetchKabupaten";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useTheme } from "@emotion/react";
 
 const AddEditFasyankes = () => {
-  const sm = useMediaQuery("(min-width: 676px)");
   const md = useMediaQuery("(min-width: 1024px)");
+  const navigate = useNavigate();
+  const theme = useTheme();
   const { provinces } = useFetchProvince();
   const { regencies } = useFetchKabupaten();
   const { puskesData, fetchPuskesByID } = useFetchPuskes();
@@ -101,9 +103,9 @@ const AddEditFasyankes = () => {
               width: "100%",
               height: "50px",
               display: "flex",
-              bgcolor: "#4c7c9e",
               borderRadius: "3px 3px 0 0",
-              color: "white",
+              color: "#2A363B",
+              bgcolor: theme.palette.primary.main,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -115,12 +117,14 @@ const AddEditFasyankes = () => {
             <Box sx={{ paddingRight: "10px" }}>
               <Button
                 onClick={() => {
-                  console.log("a");
+                  navigate("/admin/Pengaturan/Fasyankes");
                 }}
                 sx={{
-                  color: "white",
-                  bgcolor: "#1ec8b7",
+                  color: "#2A363B",
                   textTransform: "none",
+                  boxShadow:
+                    "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
+                  width: "150px",
                 }}
                 variant="outlined"
               >

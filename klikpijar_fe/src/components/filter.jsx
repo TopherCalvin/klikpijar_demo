@@ -9,8 +9,10 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "@emotion/react";
 
 const Filter = ({ filter, handleFilterChange }) => {
+  const theme = useTheme();
   const md = useMediaQuery("(min-width: 1024px)");
   const sm = useMediaQuery("(min-width: 676px)");
 
@@ -90,10 +92,14 @@ const Filter = ({ filter, handleFilterChange }) => {
         <Button
           //   onClick={handleCreateReservation}
           sx={{
-            color: "white",
-            bgcolor: "#5867dd",
+            color: "#F8F6F6",
+            bgcolor: "#2A363B",
             padding: "10px",
             width: "100px",
+            "&:hover": {
+              color: theme.palette.primary.main,
+              border: `1px solid ${theme.palette.primary.main}`,
+            },
           }}
           variant="outlined"
         >
@@ -104,8 +110,13 @@ const Filter = ({ filter, handleFilterChange }) => {
           //   onClick={handleCreateReservation}
           sx={{
             padding: "10px",
-            border: "1px solid rgba(0, 0, 0, 0.1)",
+            color: "#2A363B",
+            border: "1px solid #2A363B",
             width: "100px",
+            "&:hover": {
+              color: theme.palette.secondary.main,
+              border: `1px solid ${theme.palette.secondary.main}`,
+            },
           }}
           variant="outlined"
         >

@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useFetchPuskes } from "../../hooks/useFetchPuskes";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useTheme } from "@emotion/react";
 
 const style = {
   position: "absolute",
@@ -25,6 +26,7 @@ const style = {
 export default function DeleteModal({ openDelete, deleteModal, puskesId }) {
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const { fetchPuskesByID, deletePuskesByID } = useFetchPuskes();
+  const theme = useTheme();
 
   useEffect(() => {
     if (puskesId) fetchPuskesByID(puskesId);
@@ -43,7 +45,7 @@ export default function DeleteModal({ openDelete, deleteModal, puskesId }) {
           <Box
             fontSize={"100px"}
             width={"100%"}
-            color={"#c9dae1"}
+            color={theme.palette.secondary.main}
             textAlign={"center"}
           >
             <HelpOutlineOutlinedIcon fontSize="inherit" />
@@ -100,14 +102,14 @@ export default function DeleteModal({ openDelete, deleteModal, puskesId }) {
               sx={{
                 display: "flex",
                 gap: "5px",
-                color: "white",
-                bgcolor: "#3085d6",
                 width: "150px",
                 height: "40px",
                 borderRadius: "3px",
                 textTransform: "none",
+                color: "#F8F6F6",
+                bgcolor: theme.palette.secondary.main,
                 "&:hover": {
-                  bgcolor: "#2b75bd",
+                  bgcolor: "#B33435",
                 },
               }}
               variant="outlined"
@@ -121,7 +123,7 @@ export default function DeleteModal({ openDelete, deleteModal, puskesId }) {
           <Box
             fontSize={"100px"}
             width={"100%"}
-            color={"#ff0000"}
+            color={theme.palette.secondary.main}
             textAlign={"center"}
           >
             <ErrorOutlineIcon fontSize="inherit" />
@@ -160,14 +162,14 @@ export default function DeleteModal({ openDelete, deleteModal, puskesId }) {
               sx={{
                 display: "flex",
                 gap: "5px",
-                color: "white",
-                bgcolor: "#ff0000",
                 width: "150px",
                 height: "40px",
                 borderRadius: "3px",
                 textTransform: "none",
+                color: "#F8F6F6",
+                bgcolor: theme.palette.secondary.main,
                 "&:hover": {
-                  bgcolor: "#d10000",
+                  bgcolor: "#B33435",
                 },
               }}
               variant="outlined"

@@ -136,8 +136,8 @@ const Fasyankes = () => {
       pagination,
       columnVisibility,
     },
-    onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
     enableExpandAll: false,
     muiDetailPanelProps: () => ({
       sx: (theme) => ({
@@ -334,11 +334,11 @@ const Fasyankes = () => {
               height: "50px",
               display: "flex",
               borderRadius: "6px 6px 0 0",
-              color: "#2A363B",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               padding: "6px 0",
+              color: "#2A363B",
             }}
             bgcolor={theme.palette.primary.main}
           >

@@ -15,7 +15,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import TableViewIcon from "@mui/icons-material/TableView";
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { useMemo, useState } from "react";
 import moment from "moment/moment";
 import Filter from "../components/filter";
@@ -37,13 +37,30 @@ const Reservasi = () => {
   } = useFetchReservasi();
   const navigate = useNavigate();
   const theme = useTheme();
-  const xxl = useMediaQuery(theme.breakpoints.up("xxl"));
   const xl = useMediaQuery(theme.breakpoints.up("xl"));
   const lg = useMediaQuery(theme.breakpoints.up("lg"));
   const md = useMediaQuery(theme.breakpoints.up("md"));
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
   const smLimit = useMediaQuery("(min-width: 676px)");
-  const [columnVisibility, setColumnVisibility] = useState({});
+  const [columnVisibility, setColumnVisibility] = useState({
+    cam_code: true,
+    client_reserved_services: sm,
+    client_booking: md,
+    client_age: lg,
+    gender_name: xl,
+    res_date: false,
+    uic: false,
+    identity_number: false,
+    booking_code: false,
+    clinic_name: false,
+    is_arrived: false,
+    hasil: false,
+    arv: false,
+    client_wa_contact: false,
+    client_email: false,
+    res_created_date: false,
+    actions: false,
+  });
   const [filter, setFilter] = useState({
     dateFrom: moment().format("yyyy-MM-DD"),
     dateTo: moment().format("yyyy-MM-DD"),
@@ -126,6 +143,21 @@ const Reservasi = () => {
               justifyContent: "center",
             }}
           >
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => {
+                  navigate(
+                    `/admin/Pengaturan/Fasyankes/edit/${row.original.id}`
+                  );
+                }}
+                sx={{
+                  color: "#2A363B",
+                  bgcolor: theme.palette.primary.main,
+                }}
+              >
+                <Edit />
+              </IconButton>
+            </Tooltip>
             <Tooltip title="Delete">
               <IconButton
                 onClick={() => {
@@ -185,30 +217,112 @@ const Reservasi = () => {
         }}
       >
         <Box width={"100%"}>
-          {columnVisibility.name ? null : (
+          {columnVisibility.cam_code ? null : (
             <Typography>
-              <Box fontWeight={"600"}>Nama Fasyankes:</Box> {row.original?.name}
+              <Box fontWeight={"600"}>Cam Code:</Box> {row.original?.cam_code}
             </Typography>
           )}
-          {columnVisibility.address_desc ? null : (
+          {columnVisibility.client_reserved_services ? null : (
             <Typography>
-              <Box fontWeight={"600"}>Alamat:</Box> {row.original?.address_desc}
+              <Box fontWeight={"600"}>Layanan yang dipilih:</Box>{" "}
+              {row.original?.client_reserved_services}
             </Typography>
           )}
-          {columnVisibility.phone_num ? null : (
+          {columnVisibility.client_booking ? null : (
             <Typography>
-              <Box fontWeight={"600"}>{`Telepon | WhatsApp (WA):`}</Box>
-              <Box width={"50%"}>{row.original?.phone_num}</Box>
+              <Box fontWeight={"600"}>Janji Temu Untuk:</Box>
+              <Box>{row.original?.client_booking}</Box>
             </Typography>
           )}
-          {columnVisibility.email ? null : (
+          {columnVisibility.client_age ? null : (
             <Typography>
-              <Box fontWeight={"600"}>Email:</Box> {row.original?.email}
+              <Box fontWeight={"600"}>Umur:</Box>
+              <Box>{row.original?.client_age}</Box>
+            </Typography>
+          )}
+          {columnVisibility.gender_name ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Mengidentifikasi dirinya sebagai:</Box>
+              <Box>{row.original?.gender_name}</Box>
+            </Typography>
+          )}
+          {columnVisibility.res_date ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Jadwal Reservasi:</Box>
+              <Box>{row.original?.res_date}</Box>
+            </Typography>
+          )}
+          {columnVisibility.uic ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>UIC:</Box>
+              <Box>{row.original?.uic}</Box>
+            </Typography>
+          )}
+          {columnVisibility.identity_number ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>NIK/BPJS:</Box>
+              <Box>{row.original?.identity_number}</Box>
+            </Typography>
+          )}
+          {columnVisibility.booking_code ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>No. Antri:</Box>
+              <Box>{row.original?.booking_code}</Box>
+            </Typography>
+          )}
+          {columnVisibility.clinic_name ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Puskesmas:</Box>
+              <Box>{row.original?.clinic_name}</Box>
+            </Typography>
+          )}
+          {columnVisibility.is_arrived ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Hadir:</Box>
+              <Box>{row.original?.is_arrived}</Box>
+            </Typography>
+          )}
+          {columnVisibility.arv ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Inisiasi ARV:</Box>
+              <Box>{row.original?.arv}</Box>
+            </Typography>
+          )}
+          {columnVisibility.client_wa_contact ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>HP/WA:</Box>
+              <Box>{row.original?.client_wa_contact}</Box>
+            </Typography>
+          )}
+          {columnVisibility.client_email ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Email:</Box> {row.original?.client_email}
+            </Typography>
+          )}
+          {columnVisibility.res_created_date ? null : (
+            <Typography>
+              <Box fontWeight={"600"}>Tanggal Submit Reservasi:</Box>{" "}
+              {row.original?.res_created_date}
             </Typography>
           )}
           {columnVisibility.actions ? null : (
             <Typography>
               <Box fontWeight={"600"}>Action:</Box>
+              <Tooltip title="Edit">
+                <IconButton
+                  onClick={() => {
+                    navigate(
+                      `/admin/Pengaturan/Fasyankes/edit/${row.original.id}`
+                    );
+                  }}
+                  sx={{
+                    color: "#2A363B",
+                    bgcolor: theme.palette.primary.main,
+                  }}
+                >
+                  <Edit />
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Delete">
                 <IconButton
                   onClick={() => {
@@ -331,26 +445,28 @@ const Reservasi = () => {
         >
           <Typography
             variant="body1"
-            color="initial"
             sx={{
               width: "100%",
               height: "50px",
               display: "flex",
-              bgcolor: "#4c7c9e",
-              borderRadius: "3px 3px 0 0",
-              color: "white",
+              borderRadius: "6px 6px 0 0",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              color: "#2A363B",
             }}
+            bgcolor={theme.palette.primary.main}
           >
             <Box paddingLeft={"10px"}>Dataview - Reservasi</Box>
             <Box sx={{ paddingRight: "10px" }}>
               <Button
                 onClick={handleCreateReservation}
                 sx={{
-                  color: "white",
-                  bgcolor: "#1ec8b7",
+                  color: "#2A363B",
+                  textTransform: "none",
+                  boxShadow:
+                    "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset",
+                  width: "150px",
                 }}
                 variant="outlined"
               >
@@ -385,16 +501,15 @@ const Reservasi = () => {
               sx={{
                 display: "flex",
                 gap: "5px",
-                color: "black",
-                borderBottom: "1px solid black",
                 width: "190px",
                 borderRadius: "0",
+                color: "#2A363B",
+                borderBottom: "1px solid #2A363B",
                 "&:hover": {
-                  color: "#1ec8b7",
-                  borderBottom: "1px solid #1ec8b7",
+                  color: theme.palette.secondary.main,
+                  borderBottom: `1px solid ${theme.palette.secondary.main}`,
                 },
               }}
-              variant="outlined"
             >
               <TableViewIcon />
               Reservasi Tes
@@ -404,16 +519,15 @@ const Reservasi = () => {
               sx={{
                 display: "flex",
                 gap: "5px",
-                color: "black",
                 width: "190px",
-                borderBottom: "1px solid black",
                 borderRadius: "0",
+                color: "#2A363B",
+                borderBottom: "1px solid #2A363B",
                 "&:hover": {
-                  color: "#1ec8b7",
-                  borderBottom: "1px solid #1ec8b7",
+                  color: theme.palette.secondary.main,
+                  borderBottom: `1px solid ${theme.palette.secondary.main}`,
                 },
               }}
-              variant="outlined"
             >
               <TableViewIcon />
               Reservasi Refil
@@ -421,18 +535,17 @@ const Reservasi = () => {
             <Button
               onClick={handleCreateReservation}
               sx={{
-                color: "black",
                 display: "flex",
                 width: "190px",
                 gap: "5px",
-                borderBottom: "1px solid black",
                 borderRadius: "0",
+                color: "#2A363B",
+                borderBottom: "1px solid #2A363B",
                 "&:hover": {
-                  color: "#1ec8b7",
-                  borderBottom: "1px solid #1ec8b7",
+                  color: theme.palette.secondary.main,
+                  borderBottom: `1px solid ${theme.palette.secondary.main}`,
                 },
               }}
-              variant="outlined"
             >
               <TableViewIcon />
               Reservasi VL
